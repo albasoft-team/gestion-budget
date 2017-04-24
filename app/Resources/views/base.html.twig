@@ -7,10 +7,33 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link rel="stylesheet" href="{{ asset('bundles/gestionbudget/bootstrap/dist/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bundles/gestionbudget/bootstrap/dist/css/bootstrap-theme.min.css.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/gestionbudget/css/style.css') }}">
+        <style>
+            .container {
+                padding-top: 35px;
+            }
+        </style>
     </head>
     <body>
+    <div class="menu">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#">Gestion Budget</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" ><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
         {% block body %}{% endblock %}
+    </div>
         {% block javascripts %}{% endblock %}
     <script src="{{ asset('bundles/gestionbudget/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     </body>
 </html>
+
+
