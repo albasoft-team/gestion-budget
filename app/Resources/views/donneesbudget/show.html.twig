@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Donneesbudget</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ donneesBudget.id }}</td>
+            </tr>
+            <tr>
+                <th>Budgetdemande</th>
+                <td>{{ donneesBudget.budgetDemande }}</td>
+            </tr>
+            <tr>
+                <th>Budgetvote</th>
+                <td>{{ donneesBudget.budgetVote }}</td>
+            </tr>
+            <tr>
+                <th>Budgetrecouvre</th>
+                <td>{{ donneesBudget.budgetrecouvre }}</td>
+            </tr>
+            <tr>
+                <th>Datesaisie</th>
+                <td>{% if donneesBudget.dateSaisie %}{{ donneesBudget.dateSaisie|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('donneesbudget_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('donneesbudget_edit', { 'id': donneesBudget.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

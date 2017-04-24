@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Communes list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nomcommune</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commune in communes %}
+            <tr>
+                <td><a href="{{ path('annotation_show', { 'id': commune.id }) }}">{{ commune.id }}</a></td>
+                <td>{{ commune.nomCommune }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('annotation_show', { 'id': commune.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('annotation_edit', { 'id': commune.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('annotation_new') }}">Create a new commune</a>
+        </li>
+    </ul>
+{% endblock %}

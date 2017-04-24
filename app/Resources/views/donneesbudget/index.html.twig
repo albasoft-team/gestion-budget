@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Donneesbudgets list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Budgetdemande</th>
+                <th>Budgetvote</th>
+                <th>Budgetrecouvre</th>
+                <th>Datesaisie</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for donneesBudget in donneesBudgets %}
+            <tr>
+                <td><a href="{{ path('donneesbudget_show', { 'id': donneesBudget.id }) }}">{{ donneesBudget.id }}</a></td>
+                <td>{{ donneesBudget.budgetDemande }}</td>
+                <td>{{ donneesBudget.budgetVote }}</td>
+                <td>{{ donneesBudget.budgetrecouvre }}</td>
+                <td>{% if donneesBudget.dateSaisie %}{{ donneesBudget.dateSaisie|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('donneesbudget_show', { 'id': donneesBudget.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('donneesbudget_edit', { 'id': donneesBudget.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('donneesbudget_new') }}">Create a new donneesBudget</a>
+        </li>
+    </ul>
+{% endblock %}
