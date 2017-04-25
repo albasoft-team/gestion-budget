@@ -1,16 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Commune creation</h1>
-
+    <h1 class="page-header">Commune creation</h1>
+    <a class="btn btn-primary" href="{{ path('annotation_index') }}"><em class="glyphicon glyphicon-list"></em></a>
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <input class="btn btn-success" style="margin-top: 20px" type="submit" value="Create" />
     {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('annotation_index') }}">Back to the list</a>
-        </li>
-    </ul>
 {% endblock %}

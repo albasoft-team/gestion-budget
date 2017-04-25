@@ -1,11 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <a class="btn btn-default" href="{{ path('chapitre_index') }}">Retour</a>
     <h1 class="page-header">Creer un chapitre</h1>
-
+    <a style="margin-bottom: 20px" class="btn btn-default" href="{{ path('chapitre_index') }}">Retour</a>
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input class="btn btn-success" type="submit" value="Creer" />
+        <input style="margin-top: 20px" class="btn btn-success" type="submit" value="Creer" />
     {{ form_end(form) }}
 {% endblock %}

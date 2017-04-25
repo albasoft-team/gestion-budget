@@ -42,8 +42,7 @@ class Compte
     private $chapitre;
 
     /**
-     * @ORM\OneToOne(targetEntity="DonneesBudget", inversedBy="compte")
-     * @ORM\JoinColumn(name="donneesbudget_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="DonneesBudget", mappedBy="compte")
      */
     private $donneesbudget;
 

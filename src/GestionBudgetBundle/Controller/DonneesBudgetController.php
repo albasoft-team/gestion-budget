@@ -45,6 +45,7 @@ class DonneesBudgetController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $donneesBudget->setDateSaisie(new \DateTime());
             $em->persist($donneesBudget);
             $em->flush();
 

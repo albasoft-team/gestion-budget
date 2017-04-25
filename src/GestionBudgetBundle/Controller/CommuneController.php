@@ -10,14 +10,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Commune controller.
  *
- * @Route("annotation")
+ * @Route("commune")
  */
 class CommuneController extends Controller
 {
     /**
      * Lists all commune entities.
      *
-     * @Route("/", name="annotation_index")
+     * @Route("/", name="commune_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -34,7 +34,7 @@ class CommuneController extends Controller
     /**
      * Creates a new commune entity.
      *
-     * @Route("/new", name="annotation_new")
+     * @Route("/new", name="commune_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -48,7 +48,7 @@ class CommuneController extends Controller
             $em->persist($commune);
             $em->flush();
 
-            return $this->redirectToRoute('annotation_show', array('id' => $commune->getId()));
+            return $this->redirectToRoute('commune_show', array('id' => $commune->getId()));
         }
 
         return $this->render('commune/new.html.twig', array(
@@ -60,7 +60,7 @@ class CommuneController extends Controller
     /**
      * Finds and displays a commune entity.
      *
-     * @Route("/{id}", name="annotation_show")
+     * @Route("/{id}", name="commune_show")
      * @Method("GET")
      */
     public function showAction(Commune $commune)
@@ -76,7 +76,7 @@ class CommuneController extends Controller
     /**
      * Displays a form to edit an existing commune entity.
      *
-     * @Route("/{id}/edit", name="annotation_edit")
+     * @Route("/{id}/edit", name="commune_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Commune $commune)
@@ -88,7 +88,7 @@ class CommuneController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('annotation_edit', array('id' => $commune->getId()));
+            return $this->redirectToRoute('commune_edit', array('id' => $commune->getId()));
         }
 
         return $this->render('commune/edit.html.twig', array(
@@ -101,7 +101,7 @@ class CommuneController extends Controller
     /**
      * Deletes a commune entity.
      *
-     * @Route("/{id}", name="annotation_delete")
+     * @Route("/{id}", name="commune_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Commune $commune)
@@ -115,7 +115,7 @@ class CommuneController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('annotation_index');
+        return $this->redirectToRoute('commune_index');
     }
 
     /**
@@ -128,7 +128,7 @@ class CommuneController extends Controller
     private function createDeleteForm(Commune $commune)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('annotation_delete', array('id' => $commune->getId())))
+            ->setAction($this->generateUrl('commune_delete', array('id' => $commune->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;
