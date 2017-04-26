@@ -35,11 +35,6 @@ class Region
     private $departements;
 
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="region")
-     */
-    private $users;
-
-    /**
      * Get id
      *
      * @return int
@@ -114,37 +109,4 @@ class Region
         return $this->departements;
     }
 
-    /**
-     * Add user
-     *
-     * @param \GestionBudgetBundle\Entity\User $user
-     *
-     * @return Region
-     */
-    public function addUser(\GestionBudgetBundle\Entity\User $user)
-    {
-        $this->users[] = $user;
-
-        return $this;
-    }
-
-    /**
-     * Remove user
-     *
-     * @param \GestionBudgetBundle\Entity\User $user
-     */
-    public function removeUser(\GestionBudgetBundle\Entity\User $user)
-    {
-        $this->users->removeElement($user);
-    }
-
-    /**
-     * Get users
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
 }

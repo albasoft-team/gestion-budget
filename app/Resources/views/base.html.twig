@@ -8,13 +8,14 @@
         <link rel="stylesheet" href="{{ asset('bundles/gestionbudget/bootstrap/dist/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bundles/gestionbudget/bootstrap/dist/css/bootstrap-theme.min.css.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bundles/gestionbudget/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('front-end/bower_components/angular-xeditable/dist/css/xeditable.min.css') }}">
         <style>
             .container {
                 padding-top: 35px;
             }
         </style>
     </head>
-    <body>
+    <body ng-app="gestionBudget">
     <div class="menu">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -63,8 +64,13 @@
         {% block body %}{% endblock %}
     </div>
         {% block javascripts %}{% endblock %}
-
+    <script src="{{ asset('front-end/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('bundles/gestionbudget/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('front-end/bower_components/angular/angular.min.js') }}"></script>
+    <script src="{{ asset('front-end/app.js') }}"></script>
+    <script src="{{ asset('front-end/services/DBService.js') }}"></script>
+    <script src="{{ asset('front-end/controllers/DBController.js') }}"></script>
+    <script src="{{ asset('front-end/bower_components/angular-xeditable/dist/js/xeditable.min.js') }}"></script>
     </body>
 </html>
 

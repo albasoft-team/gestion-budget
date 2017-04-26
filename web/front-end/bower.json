@@ -1,0 +1,17 @@
+{
+  "name": "front-end",
+  "homepage": "https://github.com/albasoft-team/gestion-budget",
+  "authors": [
+    "albasoft-team <ibrahima-sory.diallo@albasoft.fr>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

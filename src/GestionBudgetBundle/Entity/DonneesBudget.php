@@ -3,6 +3,7 @@
 namespace GestionBudgetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * DonneesBudget
@@ -51,30 +52,33 @@ class DonneesBudget
      /**
      * @var \DateTime
      *
-     * @ORM\Column(name="$dateModifiee", nullable=true, type="date")
+     * @ORM\Column(name="dateModifiee", nullable=true, type="date")
      */
     private $dateModifiee;
 
-
-
     /**
-     * @ORM\OneToOne(targetEntity="Compte", inversedBy="donneesbudget")
-     * @ORM\JoinColumn(name="compte_id", referencedColumnName="id")
-     */
-    private $compte;
-    /**
-     * @ORM\ManyToOne(targetEntity="GestionBudgetBundle\Entity\User")
+     * @ORM\OneToOne(targetEntity="GestionBudgetBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
+
+    /**
+     * @ORM\OneToOne(targetEntity="GestionBudgetBundle\Entity\Compte")
+     * @ORM\JoinColumn(name="compte_id", referencedColumnName="id")
+     *
+     */
+    private $compte;
+
     /**
      * @ORM\ManyToOne(targetEntity="GestionBudgetBundle\Entity\Departement")
      * @ORM\JoinColumn(name="departement_id", referencedColumnName="id")
+     * @MaxDepth(1)
      */
     private $departement;
     /**
      * @ORM\ManyToOne(targetEntity="GestionBudgetBundle\Entity\Commune")
      * @ORM\JoinColumn(name="commune_id", referencedColumnName="id")
+     * @MaxDepth(1)
      */
     private $commune;
 
@@ -209,29 +213,6 @@ class DonneesBudget
         return $this->compte;
     }
 
-    /**
-     * Set user
-     *
-     * @param \GestionBudgetBundle\Entity\User $user
-     *
-     * @return DonneesBudget
-     */
-    public function setUser(\GestionBudgetBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \GestionBudgetBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 
     /**
      * Set departement
@@ -303,5 +284,29 @@ class DonneesBudget
     public function getDateModifiee()
     {
         return $this->dateModifiee;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \GestionBudgetBundle\Entity\User $user
+     *
+     * @return DonneesBudget
+     */
+    public function setUser(\GestionBudgetBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \GestionBudgetBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

@@ -28,10 +28,6 @@ class Commune
      */
     private $nomCommune;
 
-    /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="region")
-     */
-    private $users;
 
     /**
      * @ORM\ManyToOne(targetEntity="Departement", inversedBy="communes")
@@ -78,40 +74,6 @@ class Commune
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add user
-     *
-     * @param \GestionBudgetBundle\Entity\User $user
-     *
-     * @return Commune
-     */
-    public function addUser(\GestionBudgetBundle\Entity\User $user)
-    {
-        $this->users[] = $user;
-
-        return $this;
-    }
-
-    /**
-     * Remove user
-     *
-     * @param \GestionBudgetBundle\Entity\User $user
-     */
-    public function removeUser(\GestionBudgetBundle\Entity\User $user)
-    {
-        $this->users->removeElement($user);
-    }
-
-    /**
-     * Get users
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUsers()
-    {
-        return $this->users;
     }
 
     /**

@@ -1,49 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Donneesbudgets list</h1>
-
-    {#<table>#}
-        {#<thead>#}
-            {#<tr>#}
-                {#<th>Id</th>#}
-                {#<th>Budgetdemande</th>#}
-                {#<th>Budgetvote</th>#}
-                {#<th>Budgetrecouvre</th>#}
-                {#<th>Datesaisie</th>#}
-                {#<th>Actions</th>#}
-            {#</tr>#}
-        {#</thead>#}
-        {#<tbody>#}
-        {#{% for donneesBudget in donneesBudgets %}#}
-            {#<tr>#}
-                {#<td><a href="{{ path('donneesbudget_show', { 'id': donneesBudget.id }) }}">{{ donneesBudget.id }}</a></td>#}
-                {#<td>{{ donneesBudget.budgetDemande }}</td>#}
-                {#<td>{{ donneesBudget.budgetVote }}</td>#}
-                {#<td>{{ donneesBudget.budgetrecouvre }}</td>#}
-                {#<td>{% if donneesBudget.dateSaisie %}{{ donneesBudget.dateSaisie|date('Y-m-d') }}{% endif %}</td>#}
-                {#<td>#}
-                    {#<ul>#}
-                        {#<li>#}
-                            {#<a href="{{ path('donneesbudget_show', { 'id': donneesBudget.id }) }}">show</a>#}
-                        {#</li>#}
-                        {#<li>#}
-                            {#<a href="{{ path('donneesbudget_edit', { 'id': donneesBudget.id }) }}">edit</a>#}
-                        {#</li>#}
-                    {#</ul>#}
-                {#</td>#}
-            {#</tr>#}
-        {#{% endfor %}#}
-        {#</tbody>#}
-    {#</table>#}
-
-    {#<ul>#}
-        {#<li>#}
-            {#<a href="{{ path('donneesbudget_new') }}">Create a new donneesBudget</a>#}
-        {#</li>#}
-    {#</ul>#}
-
-    <div class="row container">
+    <div class="row container" ng-controller="donneesBudget">
         <div class="col-md-12">
 
             <div class="panel panel-default panel-table">
@@ -53,43 +11,75 @@
                             <h3 class="panel-title">Données budgétaires</h3>
                         </div>
                         <div class="col col-xs-6 text-right">
-                            <a  href="{{ path('donneesbudget_new') }}" class="btn btn-sm btn-success btn-create"><em class="glyphicon glyphicon-plus"></em></a>
+                            {#<a  href="{{ path('donneesbudget_new') }}" class="btn btn-sm btn-success btn-create"><em class="glyphicon glyphicon-plus"></em></a>#}
                         </div>
                     </div>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body table-responsive">
                     <table class="table table-striped table-bordered table-list text-center">
                         <thead>
                         <tr>
                             <th style="width: 20%; text-align: center"><em class="glyphicon glyphicon-cog"></em></th>
-                            <th class="hidden-xs">ID</th>
+                            {#<th class="hidden-xs">ID</th>#}
                             <th>Compte</th>
                             <th>Libellé compte</th>
-                            <th>Budgetdemande</th>
-                            <th>Budgetvote</th>
-                            <th>Budgetrecouvre</th>
-                            <th>Datesaisie</th>
+                            <th>Budget demande</th>
+                            <th>Budget vote</th>
+                            <th>Budget recouvre</th>
+                            <th>Date saisie</th>
                             <th>% recouvrement</th>
+                            <th>Departement</th>
+                            <th>commune</th>
+                            <th>User</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for donneesBudget in donneesBudgets %}
-                            <tr>
-                                <td align="center">
-                                    <a href="{{ path('donneesbudget_edit', { 'id': donneesBudget.id }) }}" class="btn btn-default"><em class="glyphicon glyphicon-pencil"></em></a>
-                                    <a class="btn btn-primary" href="{{ path('donneesbudget_show', { 'id': donneesBudget.id }) }}"><em class="glyphicon glyphicon-list"></em></a>
-                                    <a class="btn btn-danger"><em class="glyphicon glyphicon-trash"></em></a>
+                        {#{% for donneesBudget in donneesBudgets %}#}
+                            <tr ng-repeat="donneesBudget in allDonnessBudget">
+                                <td align="center" style="white-space: nowrap">
+                                    <!-- form -->
+                                    <form editable-form name="rowform" onbeforesave="saveDonneeBudget($data, donneesBudget.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == donneesBudget">
+                                        <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                                            <em class="glyphicon glyphicon-ok"></em>
+                                        </button>
+                                        <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                                            <em class="glyphicon glyphicon-trash"></em>
+                                        </button>
+                                    </form>
+                                    <div class="buttons" ng-show="!rowform.$visible">
+                                        <button type="button" class="btn btn-success" ng-click="rowform.$show()"><em class="glyphicon glyphicon-pencil"></em></button>
+                                        {#<button type="button" class="btn btn-danger" ng-click="removeUser($index)">del</button>#}
+                                    </div>
                                 </td>
-                                <td class="hidden-xs"><a href="{{ path('donneesbudget_show', { 'id': donneesBudget.id }) }}">{{ donneesBudget.id }}</a></td>
-                                <td>{{ donneesBudget.compte.numeroCompte }}</td>
-                                <td>{{ donneesBudget.compte.libelle }}</td>
-                                <td>{{ donneesBudget.budgetDemande }}</td>
-                                <td>{{ donneesBudget.budgetVote }}</td>
-                                <td>{{ donneesBudget.budgetrecouvre }}</td>
-                                <td>{% if donneesBudget.dateSaisie %}{{ donneesBudget.dateSaisie|date('Y-m-d') }}{% endif %}</td>
+                                    {#<a href="{{ path('donneesbudget_edit', { 'id': donneesBudget.id }) }}" class="btn btn-default"><em class="glyphicon glyphicon-pencil"></em></a>#}
+                                    {#<a class="btn btn-primary" href="{{ path('donneesbudget_show', { 'id': donneesBudget.id }) }}"><em class="glyphicon glyphicon-list"></em></a>#}
+                                    {#<a class="btn btn-danger"><em class="glyphicon glyphicon-trash"></em></a>#}
+                                {#<td class="hidden-xs"><a href="{{ path('donneesbudget_show', { 'id': donneesBudget.id }) }}">{{ donneesBudget.id }}</a></td>#}
+                                <td>[[ donneesBudget.compte.numeroCompte ]]</td>
+                                <td>[[ donneesBudget.compte.libelle ]]</td>
+                                <td>
+                                    <span editable-text="donneesBudget.budgetDemande" e-name="budgetDemande" e-form="rowform" onbeforesave="">
+                                     [[ donneesBudget.budgetDemande || 'empty' ]]
+                                    </span>
+
+                                </td>
+                                <td>
+                                    <span editable-text="donneesBudget.budgetVote" e-name="budgetVote" e-form="rowform" onbeforesave="">
+                                     [[ donneesBudget.budgetVote || 'empty' ]]
+                                    </span>
+                                </td>
+                                <td>
+                                    <span editable-text="donneesBudget.budgetrecouvre" e-name="budgetrecouvre" e-form="rowform" onbeforesave="">
+                                     [[ donneesBudget.budgetrecouvre || 'empty' ]]
+                                    </span>
+                                </td>
+                                <td>[[ donneesBudget.dateSaisie.timestamp | date : 'dd/MM/yyyy' ]]</td>
                                 <td>%</td>
+                                <td>[[donneesBudget.departement.nomDepartement]]</td>
+                                <td>[[donneesBudget.commune.nomCommune]]</td>
+                                <td>[[donneesBudget.user.prenom]]</td>
                             </tr>
-                        {% endfor %}
+                        {#{% endfor %}#}
                         </tbody>
                     </table>
 

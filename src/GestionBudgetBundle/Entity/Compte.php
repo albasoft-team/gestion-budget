@@ -41,10 +41,6 @@ class Compte
      */
     private $chapitre;
 
-    /**
-     * @ORM\OneToOne(targetEntity="DonneesBudget", mappedBy="compte")
-     */
-    private $donneesbudget;
 
     /**
      * Get id
@@ -130,27 +126,4 @@ class Compte
         return $this->chapitre;
     }
 
-    /**
-     * Set donneesbudget
-     *
-     * @param \GestionBudgetBundle\Entity\DonneesBudget $donneesbudget
-     *
-     * @return Compte
-     */
-    public function setDonneesbudget(\GestionBudgetBundle\Entity\DonneesBudget $donneesbudget = null)
-    {
-        $this->donneesbudget = $donneesbudget;
-
-        return $this;
-    }
-
-    /**
-     * Get donneesbudget
-     *
-     * @return \GestionBudgetBundle\Entity\DonneesBudget
-     */
-    public function getDonneesbudget()
-    {
-        return $this->donneesbudget;
-    }
 }

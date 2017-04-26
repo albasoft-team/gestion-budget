@@ -40,17 +40,17 @@ class User extends BaseUser
     protected $adresse;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Region", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Region")
      * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      */
     private $region;
     /**
-     * @ORM\ManyToOne(targetEntity="Departement", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Departement")
      * @ORM\JoinColumn(name="departement_id", referencedColumnName="id")
      */
     private $departement;
     /**
-     * @ORM\ManyToOne(targetEntity="Commune", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Commune")
      * @ORM\JoinColumn(name="commune_id", referencedColumnName="id")
      */
     private $commune;

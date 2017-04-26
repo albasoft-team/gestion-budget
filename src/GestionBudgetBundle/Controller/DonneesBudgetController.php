@@ -5,7 +5,12 @@ namespace GestionBudgetBundle\Controller;
 use GestionBudgetBundle\Entity\DonneesBudget;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * Donneesbudget controller.
@@ -31,6 +36,65 @@ class DonneesBudgetController extends Controller
         ));
     }
 
+    /**
+     * @Route("/allDonneesBudget")
+     * @Method("GET")
+     */
+    public function getAllDB() {
+        $em = $this->getDoctrine()->getManager();
+
+        $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')->findAll();
+//        $serializer = $this->get('serializer');
+        $normalizer = new ObjectNormalizer();
+
+        $normalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+        $encoder = new JsonEncode();
+
+        $serializer = new  Serializer(array($normalizer), array($encoder));
+        $arrayResult = $serializer->serialize($donneesBudgets,'json');
+//        $arrayResult = $serializer->normalize($donneesBudgets);
+
+        return new JsonResponse($arrayResult);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * @Route("/editDonneeBudget")
+     * @Method("POST")
+     */
+    public function editDonneeBudget(Request $request) {
+        $data = json_decode($request->getContent(), TRUE);
+        $id = $data['id'];
+        $em = $this->getDoctrine()->getManager();
+        $donneesBudget = $em->getRepository('GestionBudgetBundle:DonneesBudget')->find($id);
+        $donneesBudget->setBudgetDemande($data['budgetDemande']);
+        $donneesBudget->setBudgetVote($data['budgetVote']);
+        $donneesBudget->setBudgetrecouvre($data['budgetrecouvre']);
+        $donneesBudget->setDateModifiee(new \DateTime());
+
+        $user = $this->getUser();
+        if ($user) {
+            $donneesBudget->setUser($user);
+        }
+        $em->flush();
+        $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')->findAll();
+
+        $normalizer = new ObjectNormalizer();
+
+        $normalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+        $encoder = new JsonEncode();
+
+        $serializer = new  Serializer(array($normalizer), array($encoder));
+        $arrayResult = $serializer->serialize($donneesBudgets,'json');
+
+        return new JsonResponse($arrayResult);
+
+    }
     /**
      * Creates a new donneesBudget entity.
      *
