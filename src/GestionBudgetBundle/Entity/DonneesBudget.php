@@ -57,7 +57,7 @@ class DonneesBudget
     private $dateModifiee;
 
     /**
-     * @ORM\OneToOne(targetEntity="GestionBudgetBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="GestionBudgetBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
