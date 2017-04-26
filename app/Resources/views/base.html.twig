@@ -27,10 +27,10 @@
                     {#<li><a href="{{ path('orderline_new') }}">Créer une commande</a></li>#}
                     {#{% endif %}#}
                 </ul>
-                <ul class="nav navbar-nav navbar-right" >
-                    <a href="#" ><span class="glyphicon glyphicon-user"></span> Créer compte</a>
+                <ul class="nav navbar-nav pull-right" style="color: white; padding-top: 8px">
+                    <a href="{{ path('fos_user_registration_register') }}"  style="color: white" ><span style="color: white" class="glyphicon glyphicon-user"></span> Créer compte</a>
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <a href="{{ path('fos_user_security_logout') }}" ><span style="margin-right: 5px;" class="glyphicon glyphicon-log-out"></span>
+                        <a style="color: white"href="{{ path('fos_user_security_logout') }}" ><span style="color: white; margin-left: 15px" class="glyphicon glyphicon-log-out"></span>
                             {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                         </a>
 
