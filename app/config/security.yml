@@ -17,9 +17,10 @@ security:
                 check_path: /login_check
                 login_path: /login
                 always_use_default_target_path: false
-                default_target_path:            /donneesbudget/
+                default_target_path:            /chapitre/
                 target_path_parameter:          _target_path
                 use_referer:                    false
+
 
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
@@ -30,6 +31,11 @@ security:
             anonymous:    true
 
     access_control:
+        - { path: ^/chapitre, role: ROLE_USER }
+
+        - { path: ^/donneesbudget, role: ROLE_USER }
+        - { path: ^/departement, role: ROLE_USER }
+        - { path: ^/region, role: ROLE_USER }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }

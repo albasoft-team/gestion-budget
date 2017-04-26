@@ -64,14 +64,16 @@ class User extends BaseUser
     }
 
 
+
+
     /**
      * Set nom
      *
-     * @param \adresse $nom
+     * @param string $nom
      *
      * @return User
      */
-    public function setNom(\adresse $nom)
+    public function setNom($nom)
     {
         $this->nom = $nom;
 
@@ -81,7 +83,7 @@ class User extends BaseUser
     /**
      * Get nom
      *
-     * @return \adresse
+     * @return string
      */
     public function getNom()
     {
@@ -136,31 +138,6 @@ class User extends BaseUser
         return $this->adresse;
     }
 
-
-    /**
-     * Set commune
-     *
-     * @param \GestionBudgetBundle\Entity\Commune $commune
-     *
-     * @return User
-     */
-    public function setCommune(\GestionBudgetBundle\Entity\Commune $commune = null)
-    {
-        $this->commune = $commune;
-
-        return $this;
-    }
-
-    /**
-     * Get commune
-     *
-     * @return \GestionBudgetBundle\Entity\Commune
-     */
-    public function getCommune()
-    {
-        return $this->commune;
-    }
-
     /**
      * Set region
      *
@@ -207,5 +184,29 @@ class User extends BaseUser
     public function getDepartement()
     {
         return $this->departement;
+    }
+
+    /**
+     * Set commune
+     *
+     * @param \GestionBudgetBundle\Entity\Commune $commune
+     *
+     * @return User
+     */
+    public function setCommune(\GestionBudgetBundle\Entity\Commune $commune = null)
+    {
+        $this->commune = $commune;
+
+        return $this;
+    }
+
+    /**
+     * Get commune
+     *
+     * @return \GestionBudgetBundle\Entity\Commune
+     */
+    public function getCommune()
+    {
+        return $this->commune;
     }
 }

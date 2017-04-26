@@ -9,7 +9,7 @@
             <div class="well" style="margin-top:25px" >
                 <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
                      alt="">
-                <form class="form-signin  action="{{ path("fos_user_security_check") }}" method="post">
+                <form class="form-signin"  action="{{ path("fos_user_security_check") }}" method="post">
                     {% if csrf_token %}
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
                     {% endif %}

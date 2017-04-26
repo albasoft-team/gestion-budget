@@ -11,11 +11,7 @@
 
     <div class="container ">
 
-        {{ form_start(form) }}
-            <form  name='register_form'
-                   id='register_form'
-                   method='post'
-                   action='{{path('fos_user_registration_register')}}'>
+        {{ form_start(form,{'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register register_form'}}) }}
                 {{ form_row(form.username, {'attr': {'class': 'form-control', 'placeholder':'Nom d\'utilisateur'}}) }}
                 {{ form_row(form.nom,{'attr': {'class': 'form-control', 'placeholder':'Nom'}}) }}
                 {{ form_row(form.prenom,{'attr': {'class': 'form-control', 'placeholder':'Prénom'}}) }}
@@ -26,7 +22,6 @@
                 {{ form_row(form.region,{'attr': {'class': 'form-control'}}) }}
                 {{ form_row(form.departement,{'attr': {'class': 'form-control'}}) }}
                 {{ form_row(form.commune,{'attr': {'class': 'form-control'}}) }}
-            </form>
             <div>
                 <input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btn-success" style="margin-top: 20px" />
             </div>
