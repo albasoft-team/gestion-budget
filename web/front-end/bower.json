@@ -5,7 +5,7 @@
     "albasoft-team <ibrahima-sory.diallo@albasoft.fr>"
   ],
   "description": "angular client",
-  "main": "",
+  "main": "app.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -13,5 +13,11 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "private": true,
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "angular": "^1.6.4",
+    "angular-xeditable": "^0.7.1"
+  }
 }
