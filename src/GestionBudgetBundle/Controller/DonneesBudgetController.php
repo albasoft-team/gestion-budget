@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use GestionBudgetBundle\Entity\User;
 
 /**
  * Donneesbudget controller.
@@ -42,8 +43,8 @@ class DonneesBudgetController extends Controller
      */
     public function getAllDB() {
         $em = $this->getDoctrine()->getManager();
-
-        $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')->findAll();
+        $user = $this->getUser();
+        $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getAllDonneesBudgetByUserCommune($user->getCommune()->getNomCommune());
 //        $serializer = $this->get('serializer');
         $normalizer = new ObjectNormalizer();
 
@@ -80,7 +81,7 @@ class DonneesBudgetController extends Controller
             $donneesBudget->setUser($user);
         }
         $em->flush();
-        $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')->findAll();
+        $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getAllDonneesBudgetByUserCommune($user->getCommune()->getNomCommune());
 
         $normalizer = new ObjectNormalizer();
 

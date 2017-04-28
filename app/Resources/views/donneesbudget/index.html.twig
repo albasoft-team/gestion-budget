@@ -4,88 +4,158 @@
     <div class="row container" ng-controller="donneesBudget">
         <div class="col-md-12" ng-init="initialise()">
 
-            <div class="panel panel-default panel-table">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col col-xs-6">
-                            <h3 class="panel-title">Données budgétaires</h3>
-                        </div>
-                        <div class="col col-xs-6 text-right">
-                            {#<a  href="{{ path('donneesbudget_new') }}" class="btn btn-sm btn-success btn-create"><em class="glyphicon glyphicon-plus"></em></a>#}
-                        </div>
-                    </div>
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div class="alert alert-success">
+                    <p>Département : {{ app.user.departement.nomDepartement }}</p>
+                    {% if app.user.commune %}
+                        <p>Commune : {{ app.user.commune.nomCommune }}</p>
+                    {% endif %}
                 </div>
-                <div class="panel-body table-responsive">
-                    <table class="table table-striped table-bordered table-list text-center">
-                        <thead>
-                        <tr>
-                            <th style="width: 20%; text-align: center"><em class="glyphicon glyphicon-cog"></em></th>
-                            {#<th class="hidden-xs">ID</th>#}
-                            <th>Compte</th>
-                            <th>Libellé compte</th>
-                            <th>Budget demande</th>
-                            <th>Budget vote</th>
-                            <th>Budget recouvre</th>
-                            <th>Date saisie</th>
-                            <th>% recouvrement</th>
-                            <th>Departement</th>
-                            <th>commune</th>
-                            <th>User</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {#{% for donneesBudget in donneesBudgets %}#}
-                            <tr ng-repeat="donneesBudget in allDonnessBudget">
-                                <td align="center" style="white-space: nowrap">
-                                    <!-- form -->
-                                    <form editable-form name="rowform" onbeforesave="saveDonneeBudget($data, donneesBudget.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == donneesBudget">
-                                        <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
-                                            <em class="glyphicon glyphicon-ok"></em>
-                                        </button>
-                                        <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
-                                            <em class="glyphicon glyphicon-trash"></em>
-                                        </button>
-                                    </form>
-                                    <div class="buttons" ng-show="!rowform.$visible">
-                                        <button type="button" class="btn btn-success" ng-click="rowform.$show()"><em class="glyphicon glyphicon-pencil"></em></button>
-                                        {#<button type="button" class="btn btn-danger" ng-click="removeUser($index)">del</button>#}
-                                    </div>
-                                </td>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Saisie des données budgétaires</div>
+                    <div class="panel-body">
+                        <div class="row" style="display: flex; padding-bottom: 15px;">
+                            <div class="col-lg-4">
+                                <input  placeholder="Numéro compte" ng-model="numerocompte" class=" form-control" type="search"/>
+                            </div>
+                            <div class="col-lg-4">
+                                <input  placeholder="libelle compte" ng-model="libellecompte" class="form-control" type="search"/>
+                            </div>
+                            <div class="col-lg-4 text-right">
+                                <input  placeholder="chapitre" ng-model="chapitrecompte" class="form-control " type="search"/>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table  ng-table="allDonnees"  class="table table-striped table-bordered table-list text-center">
+                                <thead>
+                                <tr>
+                                    {#<th class="hidden-xs">ID</th>#}
+                                    <th>Compte</th>
+                                    <th>Libellé compte</th>
+                                    <th>Chapitre</th>
+                                    <th>Budget demande</th>
+                                    <th>Budget vote</th>
+                                    <th>Budget recouvre</th>
+                                    <th>Date saisie</th>
+                                    <th>% recouvrement</th>
+                                    {#<th>Departement</th>#}
+                                    {#<th>commune</th>#}
+                                    <th>User</th>
+                                    <th style="width: 20%; text-align: center"><em class="glyphicon glyphicon-cog"></em></th>
+                                </tr>
+                                {#<tr><input st-search="budgetDemande" class="form-control" placeholder="global search ..." type="text"/></tr>#}
+                                </thead>
+                                <tbody>
+                                {#{% for donneesBudget in donneesBudgets %}#}
+                                <tr ng-repeat="donneesBudget in $data | filterByNumCompte:numerocompte | filterByLibelleCompte:libellecompte | filterByChapitreCompte:chapitrecompte  track by donneesBudget.id">
+
                                     {#<a href="{{ path('donneesbudget_edit', { 'id': donneesBudget.id }) }}" class="btn btn-default"><em class="glyphicon glyphicon-pencil"></em></a>#}
                                     {#<a class="btn btn-primary" href="{{ path('donneesbudget_show', { 'id': donneesBudget.id }) }}"><em class="glyphicon glyphicon-list"></em></a>#}
                                     {#<a class="btn btn-danger"><em class="glyphicon glyphicon-trash"></em></a>#}
-                                {#<td class="hidden-xs"><a href="{{ path('donneesbudget_show', { 'id': donneesBudget.id }) }}">{{ donneesBudget.id }}</a></td>#}
-                                <td>[[ donneesBudget.compte.numeroCompte ]]</td>
-                                <td>[[ donneesBudget.compte.libelle ]]</td>
-                                <td>
+                                    {#<td class="hidden-xs"><a href="{{ path('donneesbudget_show', { 'id': donneesBudget.id }) }}">{{ donneesBudget.id }}</a></td>#}
+                                    <td>[[ donneesBudget.compte.numeroCompte ]]</td>
+                                    <td>[[ donneesBudget.compte.libelle ]]</td>
+                                    <td>[[ donneesBudget.compte.chapitre.designation ]]</td>
+                                    <td>
                                     <span editable-text="donneesBudget.budgetDemande" e-name="budgetDemande" e-form="rowform" onbeforesave="">
                                      [[ donneesBudget.budgetDemande || 'empty' ]]
                                     </span>
 
-                                </td>
-                                <td>
+                                    </td>
+                                    <td>
                                     <span editable-text="donneesBudget.budgetVote" e-name="budgetVote" e-form="rowform" onbeforesave="">
                                      [[ donneesBudget.budgetVote || 'empty' ]]
                                     </span>
-                                </td>
-                                <td>
+                                    </td>
+                                    <td>
                                     <span editable-text="donneesBudget.budgetrecouvre" e-name="budgetrecouvre" e-form="rowform" onbeforesave="">
                                      [[ donneesBudget.budgetrecouvre || 'empty' ]]
                                     </span>
-                                </td>
-                                <td>[[ donneesBudget.dateSaisie.timestamp | date : 'dd/MM/yyyy' ]]</td>
-                                <td>%</td>
-                                <td>[[donneesBudget.departement.nomDepartement]]</td>
-                                <td>[[donneesBudget.commune.nomCommune]]</td>
-                                <td>[[donneesBudget.user.prenom]]</td>
-                            </tr>
-                        {#{% endfor %}#}
-                        </tbody>
-                    </table>
+                                    </td>
+                                    <td>[[ donneesBudget.dateSaisie.timestamp | date : 'dd/MM/yyyy' ]]</td>
+                                    <td>%</td>
+                                    {#<td>[[donneesBudget.departement.nomDepartement]]</td>#}
+                                    {#<td>[[donneesBudget.commune.nomCommune]]</td>#}
+                                    <td>[[donneesBudget.user.prenom]]</td>
+                                    <td align="center" style="white-space: nowrap">
+                                        <!-- form -->
+                                        <form editable-form name="rowform" onbeforesave="saveDonneeBudget($data, donneesBudget.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == donneesBudget">
+                                            <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                                                <i class="glyphicon glyphicon-ok"></i>
+                                            </button>
+                                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                                                <i class="glyphicon glyphicon-trash"></i>
+                                            </button>
+                                        </form>
+                                        <div class="buttons" ng-show="!rowform.$visible">
+                                            <button type="button" class="btn btn-success" ng-click="rowform.$show()"><i class="glyphicon glyphicon-pencil"></i></button>
+                                            {#<button type="button" class="btn btn-danger" ng-click="removeUser($index)">del</button>#}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {#{% endfor %}#}
+                                </tbody>
+                                </tfoot>
+                            </table>
 
+                        </div>
+                    </div>
                 </div>
             </div>
-
-        </div>
+        {#<table>#}
+            {#<tr>#}
+                {#<th>Name</th>#}
+                {#<th>Average Distance</th>#}
+                {#<th>Mass</th>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<td><input ng-model="f.name"></td>#}
+                {#<td><input ng-model="g.distance" ng-change="filter_by('distance')"></td>#}
+                {#<td><input ng-model="g.mass" ng-change="filter_by('mass')"></td>#}
+            {#</tr>#}
+            {#<tr ng-repeat="p in planets | filter:f">#}
+                {#<td>[[p.name]]</td>#}
+                {#<td>[[p.distance]]</td>#}
+                {#<td>[[p.mass]]</td>#}
+            {#</tr>#}
+        {#</table>#}
+        {#<table st-table="rowCollection" class="table table-striped">#}
+            {#<thead>#}
+            {#<tr>#}
+                {#<th st-sort="firstName">first name</th>#}
+                {#<th st-sort="lastName">last name</th>#}
+                {#<th st-sort="birthDate">birth date</th>#}
+                {#<th st-sort="balance">balance</th>#}
+                {#<th>email</th>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>#}
+                    {#<input st-search="firstName" placeholder="search for firstname" class="input-sm form-control" type="search"/>#}
+                {#</th>#}
+                {#<th colspan="4">#}
+                    {#<input st-search placeholder="global search" class="input-sm form-control" type="search"/>#}
+                {#</th>#}
+            {#</tr>#}
+            {#</thead>#}
+            {#<tbody>#}
+            {#<tr ng-repeat="row in rowCollection">#}
+                {#<td>[[row.firstName | uppercase]]</td>#}
+                {#<td>[[row.lastName]]</td>#}
+                {#<td>[[row.birthDate | date]]</td>#}
+                {#<td>[[row.balance | currency]]</td>#}
+                {#<td><a ng-href="mailto:[[row.email]]">email</a></td>#}
+            {#</tr>#}
+            {#</tbody>#}
+            {#<tfoot>#}
+            {#<tr>#}
+                {#<td colspan="5" class="text-center">#}
+                    {#<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>#}
+                {#</td>#}
+            {#</tr>#}
+            {#</tfoot>#}
+        {#</table>#}
     </div>
+
+
 {% endblock %}

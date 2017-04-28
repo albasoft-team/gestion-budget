@@ -1,15 +1,54 @@
 'use strict';
 
-gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', function ($scope, donneesBudgetService) {
+gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTableParams', function ($scope, donneesBudgetService, NgTableParams) {
+    $scope.allDonneesBudget = [];
 
     $scope.initialise = function () {
         $scope.allDonnessBudget = donneesBudgetService.getDonneesBudget()
+        $scope.allDonneesB = donneesBudgetService.getDonneesBudget()
             .then(function (donnesBudgets) {
-                $scope.allDonnessBudget = JSON.parse(donnesBudgets.data);
-                console.log($scope.allDonnessBudget);
+                var results = JSON.parse(donnesBudgets.data);
+                angular.forEach(results, function (item) {
+                    $scope.allDonneesBudget.push(item);
+                });
+                // $scope.allDonneesBudget = JSON.parse(donnesBudgets.data);
+                pagination($scope.allDonneesBudget);
+                // console.log($scope.allDonnessBudget);
             }, function (msg) {
                 alert(msg);
             });
+    $scope.saveDonneeBudget = function(data, id) {
+        angular.extend(data, {id: id});
+       // return donneesBudgetService.setDonnesBudgets(data);
+        $scope.allDonneesB = donneesBudgetService.setDonnesBudgets(data)
+            .then(function (dataBudgets) {
+                var results = JSON.parse(dataBudgets.data);
+                angular.forEach(results, function (item) {
+                    $scope.allDonneesBudget.push(item);
+                });
+                // $scope.allDonneesBudget = JSON.parse(dataBudgets.data);
+                pagination($scope.allDonneesBudget);
+                // console.log($scope.allDonneesBudget);
+            }, function (msg) {
+                alert(msg);
+            })
+    };
+
+    var pagination = function (donneesBudget) {
+        $scope.allDonnees = new NgTableParams({
+            page: 1,
+            count: 5
+        }, {
+            getData: function (params) {
+                params.total(donneesBudget.length);
+                // var sortedData = params.sorting() ? $filter('orderBy')($scope.allDonneesBudget, params.orderBy()) : $scope.allDonneesBudget;
+                // var orderedData = params.filter() ? $filter('filter')(sortedData, params.filter()) : sortedData;
+                // params.total(orderedData.length);
+                return donneesBudget.slice((params.page() - 1) * params.count(), params.page() * params.count());
+            }
+        });
+    };
+
         $scope.saveDonneeBudget = function(data, id) {
             angular.extend(data, {id: id});
             // return donneesBudgetService.setDonnesBudgets(data);

@@ -10,4 +10,16 @@ namespace GestionBudgetBundle\Repository;
  */
 class DonneesBudgetRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getAllDonneesBudgetByUserCommune($usercommune) {
+
+        $query = $this->createQueryBuilder('db')
+            ->join('db.commune','com')
+            ->where('com.nomCommune = :usercommune')
+            ->setParameter('usercommune', $usercommune)
+            ->getQuery();
+        $donnees = $query->getResult();
+        return $donnees;
+
+    }
 }
