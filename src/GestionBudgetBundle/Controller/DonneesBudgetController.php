@@ -88,7 +88,14 @@ class DonneesBudgetController extends Controller
             $donneesBudget->setUser($user);
         }
         $em->flush();
-        $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getAllDonneesBudgetByUserCommune($user->getCommune()->getNomCommune());
+        if ($user->getCommune() != null)
+        {
+            $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')
+                ->getAllDonneesBudgetByUserCommune($user->getCommune()->getNomCommune());
+        }else{
+            $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')
+                ->getAllDonneesBudgetByUserDeparttement($user->getDepartement()->getNomDepartement());
+        }
 
         $normalizer = new ObjectNormalizer();
 
