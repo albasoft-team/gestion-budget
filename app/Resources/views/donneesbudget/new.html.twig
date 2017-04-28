@@ -3,7 +3,7 @@
 {% block body %}
     <h1 class="page-header">Créer des données budgétaires</h1>
     <a class="btn btn-primary" style="margin-bottom: 20px" href="{{ path('donneesbudget_index') }}"><em class="glyphicon glyphicon-list"></em></a>
-    {{ form_start(form) }}
+    {{ form_start(form,{'method': 'post', 'action': path('donneesbudget_new')}) }}
         {{ form_widget(form) }}
         <input  class="btn btn-success" style="margin-top: 20px" type="submit" value="Create" />
     {{ form_end(form) }}

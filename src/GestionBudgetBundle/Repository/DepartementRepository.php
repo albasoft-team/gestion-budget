@@ -10,4 +10,9 @@ namespace GestionBudgetBundle\Repository;
  */
 class DepartementRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function hello ($texte)
+    {
+        return $texte;
+
+    }
 }

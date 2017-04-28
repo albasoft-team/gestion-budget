@@ -3,7 +3,7 @@
 {% block body %}
     <h1 class="page-header">Creer un chapitre</h1>
     <a style="margin-bottom: 20px" class="btn btn-default" href="{{ path('chapitre_index') }}">Retour</a>
-    {{ form_start(form) }}
+    {{ form_start(form,{'method': 'post', 'action': path('chapitre_new')}) }}
         {{ form_widget(form) }}
         <input style="margin-top: 20px" class="btn btn-success" type="submit" value="Creer" />
     {{ form_end(form) }}

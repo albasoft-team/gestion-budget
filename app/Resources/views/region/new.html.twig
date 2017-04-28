@@ -3,7 +3,7 @@
 {% block body %}
     <h1 class=page-header>Regions</h1>
     <a class="btn btn-primary" href="{{ path('region_index') }}"><em class="glyphicon glyphicon-list"></em></a>
-    {{ form_start(form) }}
+    {{ form_start(form,{'method': 'post', 'action': path('region_new')}) }}
         {{ form_widget(form) }}
         <input class="btn btn-success" type="submit" value="Create" />
     {{ form_end(form) }}

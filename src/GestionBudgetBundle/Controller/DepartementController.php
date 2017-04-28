@@ -98,6 +98,12 @@ class DepartementController extends Controller
         ));
     }
 
+    public function test ()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository("GestionBudgetBundle:Departement")->hello("hello world");
+        return $repo;
+    }
     /**
      * Deletes a departement entity.
      *
