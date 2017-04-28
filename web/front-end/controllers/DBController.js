@@ -17,6 +17,7 @@ gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTa
             }, function (msg) {
                 alert(msg);
             });
+    };
     $scope.saveDonneeBudget = function(data, id) {
         angular.extend(data, {id: id});
        // return donneesBudgetService.setDonnesBudgets(data);
@@ -49,18 +50,7 @@ gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTa
         });
     };
 
-        $scope.saveDonneeBudget = function(data, id) {
-            angular.extend(data, {id: id});
-            // return donneesBudgetService.setDonnesBudgets(data);
-            $scope.allDonnessBudget = donneesBudgetService.setDonnesBudgets(data)
-                .then(function (dataBudgets) {
-                    $scope.allDonnessBudget = JSON.parse(dataBudgets.data);
-                    console.log($scope.allDonnessBudget);
-                }, function (msg) {
-                    alert(msg);
-                })
-        };
-    }
+
 
     $(document).on('change', 'input:radio[id^="chkcommune"]', function (event) {
         $('#dvcommune').show();
