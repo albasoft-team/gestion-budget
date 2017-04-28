@@ -44,7 +44,14 @@ class DonneesBudgetController extends Controller
     public function getAllDB() {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getAllDonneesBudgetByUserCommune($user->getCommune()->getNomCommune());
+        if ($user->getCommune() != null) {
+            $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')
+                ->getAllDonneesBudgetByUserCommune($user->getCommune()->getNomCommune());
+        }
+        else {
+            $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')
+                ->getAllDonneesBudgetByUserDeparttement($user->getDepartement()->getNomDepartement());
+        }
 //        $serializer = $this->get('serializer');
         $normalizer = new ObjectNormalizer();
 

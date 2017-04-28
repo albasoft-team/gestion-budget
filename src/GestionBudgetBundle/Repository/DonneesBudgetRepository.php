@@ -22,4 +22,15 @@ class DonneesBudgetRepository extends \Doctrine\ORM\EntityRepository
         return $donnees;
 
     }
+    public function getAllDonneesBudgetByUserDeparttement($userdepart) {
+
+        $query = $this->createQueryBuilder('db')
+            ->join('db.departement','dep')
+            ->where('dep.nomDepartement = :userdepart')
+            ->setParameter('userdepart', $userdepart)
+            ->getQuery();
+        $donnees = $query->getResult();
+        return $donnees;
+
+    }
 }
