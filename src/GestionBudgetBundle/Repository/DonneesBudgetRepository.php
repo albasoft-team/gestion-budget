@@ -14,8 +14,8 @@ class DonneesBudgetRepository extends \Doctrine\ORM\EntityRepository
     public function getAllDonneesBudgetByUserCommune($usercommune) {
 
         $query = $this->createQueryBuilder('db')
-            ->join('db.commune','com')
-            ->where('com.nomCommune = :usercommune')
+            ->where('db.commune=:usercommune')
+//            ->where('com.nomCommune = :usercommune')
             ->setParameter('usercommune', $usercommune)
             ->getQuery();
         $donnees = $query->getResult();
@@ -25,9 +25,10 @@ class DonneesBudgetRepository extends \Doctrine\ORM\EntityRepository
     public function getAllDonneesBudgetByUserDeparttement($userdepart) {
 
         $query = $this->createQueryBuilder('db')
-            ->join('db.departement','dep')
-            ->where('dep.nomDepartement = :userdepart')
-            ->setParameter('userdepart', $userdepart)
+            ->where('db.departement=:userdepart')
+            ->setParameter(':userdepart',$userdepart)
+//            ->where('dep.nomDepartement = :userdepart')
+            ->andWhere('db.commune is NULL')
             ->getQuery();
         $donnees = $query->getResult();
         return $donnees;

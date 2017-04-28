@@ -46,11 +46,11 @@ class DonneesBudgetController extends Controller
         $user = $this->getUser();
         if ($user->getCommune() != null) {
             $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')
-                ->getAllDonneesBudgetByUserCommune($user->getCommune()->getNomCommune());
+                ->getAllDonneesBudgetByUserCommune($user->getCommune());
         }
         else {
             $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')
-                ->getAllDonneesBudgetByUserDeparttement($user->getDepartement()->getNomDepartement());
+                ->getAllDonneesBudgetByUserDeparttement($user->getDepartement());
         }
 //        $serializer = $this->get('serializer');
         $normalizer = new ObjectNormalizer();
@@ -91,10 +91,10 @@ class DonneesBudgetController extends Controller
         if ($user->getCommune() != null)
         {
             $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')
-                ->getAllDonneesBudgetByUserCommune($user->getCommune()->getNomCommune());
+                ->getAllDonneesBudgetByUserCommune($user->getCommune());
         }else{
             $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')
-                ->getAllDonneesBudgetByUserDeparttement($user->getDepartement()->getNomDepartement());
+                ->getAllDonneesBudgetByUserDeparttement($user->getDepartement());
         }
 
         $normalizer = new ObjectNormalizer();

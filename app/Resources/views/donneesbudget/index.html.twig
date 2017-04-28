@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="row container" ng-controller="donneesBudget">
-        <div class="col-md-12" ng-init="initialise()">
+        <div class="col-md-12" >
 
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <div class="alert alert-success">
@@ -103,58 +103,6 @@
                     </div>
                 </div>
             </div>
-        {#<table>#}
-            {#<tr>#}
-                {#<th>Name</th>#}
-                {#<th>Average Distance</th>#}
-                {#<th>Mass</th>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<td><input ng-model="f.name"></td>#}
-                {#<td><input ng-model="g.distance" ng-change="filter_by('distance')"></td>#}
-                {#<td><input ng-model="g.mass" ng-change="filter_by('mass')"></td>#}
-            {#</tr>#}
-            {#<tr ng-repeat="p in planets | filter:f">#}
-                {#<td>[[p.name]]</td>#}
-                {#<td>[[p.distance]]</td>#}
-                {#<td>[[p.mass]]</td>#}
-            {#</tr>#}
-        {#</table>#}
-        {#<table st-table="rowCollection" class="table table-striped">#}
-            {#<thead>#}
-            {#<tr>#}
-                {#<th st-sort="firstName">first name</th>#}
-                {#<th st-sort="lastName">last name</th>#}
-                {#<th st-sort="birthDate">birth date</th>#}
-                {#<th st-sort="balance">balance</th>#}
-                {#<th>email</th>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>#}
-                    {#<input st-search="firstName" placeholder="search for firstname" class="input-sm form-control" type="search"/>#}
-                {#</th>#}
-                {#<th colspan="4">#}
-                    {#<input st-search placeholder="global search" class="input-sm form-control" type="search"/>#}
-                {#</th>#}
-            {#</tr>#}
-            {#</thead>#}
-            {#<tbody>#}
-            {#<tr ng-repeat="row in rowCollection">#}
-                {#<td>[[row.firstName | uppercase]]</td>#}
-                {#<td>[[row.lastName]]</td>#}
-                {#<td>[[row.birthDate | date]]</td>#}
-                {#<td>[[row.balance | currency]]</td>#}
-                {#<td><a ng-href="mailto:[[row.email]]">email</a></td>#}
-            {#</tr>#}
-            {#</tbody>#}
-            {#<tfoot>#}
-            {#<tr>#}
-                {#<td colspan="5" class="text-center">#}
-                    {#<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>#}
-                {#</td>#}
-            {#</tr>#}
-            {#</tfoot>#}
-        {#</table>#}
     </div>
 
 

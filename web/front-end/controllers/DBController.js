@@ -1,34 +1,34 @@
 'use strict';
 
 gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTableParams', function ($scope, donneesBudgetService, NgTableParams) {
-    $scope.allDonneesBudget = [];
+    var allDonneesBudget = [];
 
-    $scope.initialise = function () {
-        $scope.allDonnessBudget = donneesBudgetService.getDonneesBudget()
-        $scope.allDonneesB = donneesBudgetService.getDonneesBudget()
+
+        //$scope.allDonnessBudget = donneesBudgetService.getDonneesBudget()
+        donneesBudgetService.getDonneesBudget()
             .then(function (donnesBudgets) {
                 var results = JSON.parse(donnesBudgets.data);
                 angular.forEach(results, function (item) {
-                    $scope.allDonneesBudget.push(item);
+                  allDonneesBudget.push(item);
                 });
                 // $scope.allDonneesBudget = JSON.parse(donnesBudgets.data);
-                pagination($scope.allDonneesBudget);
+                pagination(allDonneesBudget);
                 // console.log($scope.allDonnessBudget);
             }, function (msg) {
                 alert(msg);
             });
-    };
     $scope.saveDonneeBudget = function(data, id) {
         angular.extend(data, {id: id});
+        allDonneesBudget = [];
        // return donneesBudgetService.setDonnesBudgets(data);
-        $scope.allDonneesB = donneesBudgetService.setDonnesBudgets(data)
+         donneesBudgetService.setDonnesBudgets(data)
             .then(function (dataBudgets) {
                 var results = JSON.parse(dataBudgets.data);
                 angular.forEach(results, function (item) {
-                    $scope.allDonneesBudget.push(item);
+                    allDonneesBudget.push(item);
                 });
                 // $scope.allDonneesBudget = JSON.parse(dataBudgets.data);
-                pagination($scope.allDonneesBudget);
+                pagination(allDonneesBudget);
                 // console.log($scope.allDonneesBudget);
             }, function (msg) {
                 alert(msg);
