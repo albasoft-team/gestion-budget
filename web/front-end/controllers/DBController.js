@@ -1,6 +1,6 @@
 'use strict';
 
-gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTableParams', function ($scope, donneesBudgetService, NgTableParams) {
+gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTableParams','$timeout', function ($scope, donneesBudgetService, NgTableParams,$timeout) {
     var allDonneesBudget = [];
 
 
@@ -17,9 +17,22 @@ gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTa
             }, function (msg) {
                 alert(msg);
             });
+    $scope.isnumber = true;
+
     $scope.saveDonneeBudget = function(data, id) {
         angular.extend(data, {id: id});
         allDonneesBudget = [];
+        if (!isNumeric(data.budgetDemande) || !isNumeric(data.budgetVote)  || !isNumeric(data.budgetrecouvre)  ) {
+            $scope.isnumber = false;
+
+            $timeout(function () {
+                $scope.isnumber = true;
+                angular.element('#editForm').triggerHandler('click');
+            },5000);
+            // $('#alert').delay(3000).hide();
+            // angular.element(document.getElementById('editForm')).click();
+            return;
+        }
        // return donneesBudgetService.setDonnesBudgets(data);
          donneesBudgetService.setDonnesBudgets(data)
             .then(function (dataBudgets) {
@@ -34,7 +47,9 @@ gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTa
                 alert(msg);
             })
     };
-
+    function isNumeric(num){
+        return !isNaN(num)
+    }
     var pagination = function (donneesBudget) {
         $scope.allDonnees = new NgTableParams({
             page: 1,

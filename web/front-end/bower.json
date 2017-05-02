@@ -18,6 +18,7 @@
   "dependencies": {
     "jquery": "^3.2.1",
     "angular": "^1.6.4",
-    "angular-xeditable": "^0.7.1"
+    "angular-xeditable": "^0.7.1",
+    "angular-bootstrap": "angular-ui-bootstrap-bower#0.10.0"
   }
 }

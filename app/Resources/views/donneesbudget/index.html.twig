@@ -11,6 +11,10 @@
                         <p>Commune : {{ app.user.commune.nomCommune }}</p>
                     {% endif %}
                 </div>
+                 <div id="alert" ng-hide="isnumber" class="alert alert-danger">
+                     <p>La valeur saisie doit être un entier ou un décimal</p>
+                 </div>
+
                 <div class="panel panel-primary">
                     <div class="panel-heading">Saisie des données budgétaires</div>
                     <div class="panel-body">
@@ -64,7 +68,7 @@
 
                                     </td>
                                     <td>
-                                    <span editable-text="donneesBudget.budgetVote" e-name="budgetVote" e-form="rowform" onbeforesave="">
+                                    <span  editable-text="donneesBudget.budgetVote" e-name="budgetVote" e-form="rowform" onbeforesave="">
                                      [[ donneesBudget.budgetVote || 'empty' ]]
                                     </span>
                                     </td>
@@ -80,7 +84,7 @@
                                     <td>[[donneesBudget.user.prenom]]</td>
                                     <td align="center" style="white-space: nowrap">
                                         <!-- form -->
-                                        <form editable-form name="rowform" onbeforesave="saveDonneeBudget($data, donneesBudget.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == donneesBudget">
+                                        <form editable-form  name="rowform" onbeforesave="saveDonneeBudget($data, donneesBudget.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == donneesBudget">
                                             <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
                                                 <i class="glyphicon glyphicon-ok"></i>
                                             </button>
@@ -88,14 +92,15 @@
                                                 <i class="glyphicon glyphicon-trash"></i>
                                             </button>
                                         </form>
-                                        <div class="buttons" ng-show="!rowform.$visible">
-                                            <button type="button" class="btn btn-success" ng-click="rowform.$show()"><i class="glyphicon glyphicon-pencil"></i></button>
+                                        <div class="buttons"  ng-show="!rowform.$visible">
+                                            <button type="button" id="editForm" class="btn btn-success" ng-click="rowform.$show()"><i class="glyphicon glyphicon-pencil"></i></button>
                                             {#<button type="button" class="btn btn-danger" ng-click="removeUser($index)">del</button>#}
                                         </div>
                                     </td>
                                 </tr>
                                 {#{% endfor %}#}
                                 </tbody>
+                                <tfoot>
                                 </tfoot>
                             </table>
 
@@ -104,6 +109,6 @@
                 </div>
             </div>
     </div>
-
+    </div>
 
 {% endblock %}
