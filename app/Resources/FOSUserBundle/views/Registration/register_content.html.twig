@@ -1,49 +1,59 @@
 {% trans_default_domain 'FOSUserBundle' %}
 {% block body %}
-    <h1 class="text-center">Creer un compte uilisateur</h1>
-
     <div class="container " ng-controller="donneesBudget">
-        {{ form_start(form,{'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register register_form'}}) }}
+        <h1 class="text-center">Creer un compte uilisateur</h1>
+        <div class="colorgraph"></div>
+        <div  style="margin-top: 10px;"></div>
+        {{ form_start(form,{'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register register_form','data-toggle':'validator','role':'form'}}) }}
                 {{ form_row(form.username, {'attr': {'class': 'form-control', 'placeholder':'Nom d\'utilisateur'}}) }}
                 {{ form_row(form.nom,{'attr': {'class': 'form-control', 'placeholder':'Nom'}}) }}
                 {{ form_row(form.prenom,{'attr': {'class': 'form-control', 'placeholder':'Prénom'}}) }}
                 {{ form_row(form.adresse,{'attr': {'class': 'form-control', 'placeholder':'Adresse'}}) }}
-                {{ form_row(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder':'mot de passe'}}) }}
-                {{ form_row(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder':'Confirmer le mot de passe'}}) }}
-                {{ form_row(form.email,{'attr': {'class': 'form-control', 'placeholder':'Adrésse Email'}}) }}
-                {{ form_row(form.region,{'attr': {'class': 'form-control '}}) }}
-        {#<div class="custom-controls-stacked">#}
-            {#<label class="custom-control" style="margin-left: 5px;margin-left:30px">#}
-                {#<input id="radioStacked1" name="radio-stacked" type="radio" class="custom-control-input" checked="checked">#}
-                {#<span class="custom-control-indicator"></span>#}
-                {#<span class="custom-control-description">Departement</span>#}
-            {#</label>#}
-            {#<label for="chkcommune" class="custom-control">#}
-                {#<input id="chkcommune" name="radio-stacked" type="radio" class="custom-control-input">#}
-                {#<span class="custom-control-indicator"></span>#}
-                {#<span class="custom-control-description">Commune</span>#}
-            {#</label>#}
-        {#</div>#}
-
-        <label class="custom-control" style="margin-top: 20px">Zone recouvrée:</label>
-        <div class="custom-controls-stacked btn-group" data-toggle="buttons">
-
-            <label class="custom-control btn btn-primary active">
-                <input id="radioStacked1" name="radio-stacked" type="radio"  checked autocomplete="off">Departement
-            </label>
-            <label for="chkcommune" class="custom-control btn btn-primary" style="margin-left: 5px">Commune
-                <input id="chkcommune" name="radio-stacked" type="radio">
-            </label>
-        </div>
-
-                {{ form_row(form.departement,{'attr': {'class': 'form-control '}}) }}
-        <div id="dvcommune" style="display: none">
-            {{ form_row(form.commune,{'attr': {'class': 'form-control t'}}) }}
-        </div>
-
-            <div>
-                <input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btn-success" style="margin-top: 20px" />
+        <div class="form-group">
+            <div class="form-group">
+                {{ form_row(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder':'mot de passe','data-minlength':'7'}}) }}
+            <div class="help-block">Choisir un mot de passe dépassant 6 caractéres</div>
             </div>
+            <div class="form-group">
+                {{ form_row(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder':'Confirmer le mot de passe','id':'inputPasswordConfirm','data-match':'#fos_user_registration_form_plainPassword_first','data-match-error':'Les mots de passes de conrrespondent pas'}}) }}
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+        <div class="form-group">
+                {{ form_row(form.email,{'attr': {'class': 'form-control', 'placeholder':'Adrésse Email','id':'inputEmail','data-error':'cette adresse email n\'est pas valide'}}) }}
+                <div class="help-block with-errors"></div>
+                </div>
+                    {{ form_row(form.region,{'attr': {'class': 'form-control' }}) }}
+                {#<div class="custom-controls-stacked">#}
+                    {#<label class="custom-control" style="margin-left: 5px;margin-left:30px">#}
+                        {#<input id="radioStacked1" name="radio-stacked" type="radio" class="custom-control-input" checked="checked">#}
+                        {#<span class="custom-control-indicator"></span>#}
+                        {#<span class="custom-cclass="btn-group btn-group-vertical"ontrol-description">Departement</span>#}
+                    {#</label>#}
+                    {#<label for="chkcommune" class="custom-control">#}
+                        {#<input id="chkcommune" name="radio-stacked" type="radio" class="custom-control-input">#}
+                        {#<span class="custom-control-indicator"></span>#}
+                        {#<span class="custom-control-description">Commune</span>#}
+                    {#</label>#}
+                {#</div>#}
+
+                <label class="custom-control" style="margin-top: 20px">Zone recouvrée:</label>
+                <div class="custom-controls-stacked btn-group" data-toggle="buttons">
+                    <label class="custom-control btn btn-primary active">
+                        <input id="radioStacked1" name="radio-stacked" type="radio"  checked autocomplete="off">Departement
+                    </label>
+                    <label for="chkcommune" class="custom-control btn btn-primary" style="margin-left: 5px">Commune
+                        <input id="chkcommune" name="radio-stacked" type="radio">
+                    </label>
+                </div>
+                        {{ form_row(form.departement,{'attr': {'class': 'form-control '}}) }}
+                <div id="dvcommune" style="display: none">
+                    {{ form_row(form.commune,{'attr': {'class': 'form-control t'}}) }}
+                </div>
+
+                    <div>
+                        <input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btn-success" style="margin-top: 20px" />
+                    </div>
         {{ form_end(form) }}
     </div>
 

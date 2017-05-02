@@ -1,1 +1,49 @@
-Hello World!
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="row container">
+        <div class="col-md-10 col-md-offset-1">
+
+            <div class="panel panel-default panel-table">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col col-xs-6">
+                            <h3 class="panel-title"> Outils Admin</h3>
+                        </div>
+                        <div class="col col-xs-6 text-right">
+                            <a  href="{{ path('chapitre_new') }}" class="btn btn-sm btn-primary btn-create">Create New</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-list text-center">
+                        <thead>
+                        <tr>
+                            <th style="width: 20%; text-align: center"><em class="glyphicon glyphicon-cog"></em></th>
+                            <th class="hidden-xs">ID</th>
+                            <th>Designation</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for chapitre in chapitres %}
+                            <tr>
+                                <td align="center">
+                                    <a href="{{ path('chapitre_edit', { 'id': chapitre.id }) }}" class="btn btn-default"><em class="glyphicon glyphicon-pencil"></em></a>
+                                    <a class="btn btn-primary" href="{{ path('chapitre_show', { 'id': chapitre.id }) }}"><em class="glyphicon glyphicon-list"></em></a>
+                                    <a class="btn btn-danger"><em class="glyphicon glyphicon-trash"></em></a>
+                                </td>
+                                <td class="hidden-xs"><a href="{{ path('chapitre_show', { 'id': chapitre.id }) }}">{{ chapitre.id }}</a></td>
+                                <td>{{ chapitre.designation }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+

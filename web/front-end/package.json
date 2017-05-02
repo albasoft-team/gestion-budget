@@ -18,6 +18,7 @@
   "homepage": "https://github.com/albasoft-team/gestion-budget#readme",
   "dependencies": {
     "angular-smart-table": "^2.1.8",
+    "bootstrap-validator": "^0.11.9",
     "angular-ui-bootstrap": "^2.5.0",
     "ng-table": "^3.0.1",
     "x-editable": "^1.5.1"
