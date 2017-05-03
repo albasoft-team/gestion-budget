@@ -51,7 +51,9 @@
 /*.panel-table .panel-body .table-bordered > tbody > tr > td{*/
     /*line-height: 34px;*/
 /*}*/
-
+.alertBorder {
+   border:  2px solid #a94442
+}
 
 .form-signin
 {

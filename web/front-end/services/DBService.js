@@ -3,6 +3,7 @@
 gestionBudget.factory('donneesBudgetService', function ($http, $q) {
     var factory = {
         donneesBudget : false,
+        chapitre: false,
         getDonneesBudget : function () {
             var  deferred = $q.defer();
             if (factory.donneesBudget !== false) {
@@ -30,6 +31,21 @@ gestionBudget.factory('donneesBudgetService', function ($http, $q) {
                 }));
             return deferred.promise ;
         }
+        // getChapitre : function () {
+        //     var  deferred = $q.defer();
+        //     if (factory.chapitre !== false) {
+        //         deferred.resolve(factory.chapitre);
+        //     }
+        //     else {
+        //         $http.get('/chapitre/allDonneesBudget')
+        //             .then(function (data, status) {
+        //                 factory.chapitre = data;
+        //                 deferred.resolve(factory.chapitre);
+        //             },(function (data, status) {
+        //                 deferred.reject('impossible de recuperer les donnees');
+        //             }));
+        //     }
+        // }
     };
     return factory;
 });

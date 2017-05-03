@@ -1,8 +1,17 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <style>
+        /*table input.ng-invalid {*/
+            /*background-color:pink;*/
+        /*}*/
+        /*table input.ng-valid {*/
+            /*background-color:lightgreen;*/
+        /*}*/
+    </style>
+    {% endblock %}
 {% block body %}
     <div class="row container" ng-controller="donneesBudget">
-        <div class="col-md-12" >
+        <div class="col-md-12" ng-init="getChapitre()" >
 
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <div class="alert alert-success">
@@ -12,7 +21,7 @@
                     {% endif %}
                 </div>
                  <div id="alert" ng-hide="isnumber" class="alert alert-danger">
-                     <p>La valeur saisie doit être un entier ou un décimal</p>
+                     <p>[[msgErreur]]</p>
                  </div>
 
                 <div class="panel panel-primary">
@@ -20,13 +29,17 @@
                     <div class="panel-body">
                         <div class="row" style="display: flex; padding-bottom: 15px;">
                             <div class="col-lg-4">
-                                <input  placeholder="Numéro compte" ng-model="numerocompte" class=" form-control" type="search"/>
+                                <input  placeholder="Numéro compte" ng-model="numerocompte" class=" form-control input-lg" type="search"/>
                             </div>
                             <div class="col-lg-4">
-                                <input  placeholder="libelle compte" ng-model="libellecompte" class="form-control" type="search"/>
+                                <input  placeholder="libelle compte" ng-model="libellecompte" class="form-control input-lg" type="search"/>
                             </div>
                             <div class="col-lg-4 text-right">
-                                <input  placeholder="chapitre" ng-model="chapitrecompte" class="form-control " type="search"/>
+                                <select  placeholder="chapitre" ng-model="chapitrecompte" class="form-control input-lg" type="search">
+                                    {% for chap in chapitres %}
+                                        <option> {{ chap.designation }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
 
@@ -61,24 +74,25 @@
                                     <td>[[ donneesBudget.compte.numeroCompte ]]</td>
                                     <td>[[ donneesBudget.compte.libelle ]]</td>
                                     <td>[[ donneesBudget.compte.chapitre.designation ]]</td>
-                                    <td>
-                                    <span editable-text="donneesBudget.budgetDemande" e-name="budgetDemande" e-form="rowform" onbeforesave="">
+                                    <td id="gb[[donneesBudget.id]][[donneesBudget.budgetDemande]]">
+                                    <span  e-ng-change="setMarkeur($data,donneesBudget.id,donneesBudget.budgetDemande)" editable-text="donneesBudget.budgetDemande" e-name="budgetDemande" e-form="rowform" onbeforesave="">
                                      [[ donneesBudget.budgetDemande || 'empty' ]]
                                     </span>
 
                                     </td>
-                                    <td>
-                                    <span  editable-text="donneesBudget.budgetVote" e-name="budgetVote" e-form="rowform" onbeforesave="">
+                                    <td id="gb[[donneesBudget.id]][[donneesBudget.budgetVote]]">
+                                    <span   e-ng-change="setMarkeur($data,donneesBudget.id,donneesBudget.budgetVote)"  editable-text="donneesBudget.budgetVote" e-name="budgetVote" e-form="rowform" onbeforesave="">
                                      [[ donneesBudget.budgetVote || 'empty' ]]
                                     </span>
                                     </td>
-                                    <td>
-                                    <span editable-text="donneesBudget.budgetrecouvre" e-name="budgetrecouvre" e-form="rowform" onbeforesave="">
+                                    <td id="gb[[donneesBudget.id]][[donneesBudget.budgetrecouvre]]">
+                                    <span  e-ng-change="setMarkeur($data,donneesBudget.id,donneesBudget.budgetrecouvre)" editable-text="donneesBudget.budgetrecouvre" e-name="budgetrecouvre" e-form="rowform" onbeforesave="">
                                      [[ donneesBudget.budgetrecouvre || 'empty' ]]
                                     </span>
                                     </td>
                                     <td>[[ donneesBudget.dateSaisie.timestamp | date : 'dd/MM/yyyy' ]]</td>
-                                    <td>%</td>
+                                    <td ng-if="(donneesBudget.budgetrecouvre !== null || donneesBudget.budgetVote !== null)">[[(donneesBudget.budgetrecouvre / donneesBudget.budgetVote) * 100 | number : 2]] %</td>
+                                    <td ng-if="donneesBudget.budgetrecouvre == null || donneesBudget.budgetVote == null">%</td>
                                     {#<td>[[donneesBudget.departement.nomDepartement]]</td>#}
                                     {#<td>[[donneesBudget.commune.nomCommune]]</td>#}
                                     <td>[[donneesBudget.user.prenom]]</td>
@@ -93,7 +107,7 @@
                                             </button>
                                         </form>
                                         <div class="buttons"  ng-show="!rowform.$visible">
-                                            <button type="button" id="editForm" class="btn btn-success" ng-click="rowform.$show()"><i class="glyphicon glyphicon-pencil"></i></button>
+                                            <button type="button" id="editForm[[donneesBudget.id]]" class="btn btn-success" ng-click="rowform.$show()"><i class="glyphicon glyphicon-pencil"></i></button>
                                             {#<button type="button" class="btn btn-danger" ng-click="removeUser($index)">del</button>#}
                                         </div>
                                     </td>

@@ -24,14 +24,23 @@ gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTa
         allDonneesBudget = [];
         if (!isNumeric(data.budgetDemande) || !isNumeric(data.budgetVote)  || !isNumeric(data.budgetrecouvre)  ) {
             $scope.isnumber = false;
-
+            $scope.msgErreur = "La valeur saisie doit être un entier ou un décimal !!!";
             $timeout(function () {
                 $scope.isnumber = true;
-                angular.element('#editForm').triggerHandler('click');
+                angular.element('#editForm'+id).triggerHandler('click');
             },5000);
             // $('#alert').delay(3000).hide();
             // angular.element(document.getElementById('editForm')).click();
             return;
+        }
+        if (data.budgetrecouvre > data.budgetVote) {
+            $scope.isnumber = false;
+            $scope.msgErreur = "La valeur du budget recouvré ne peut pas être supérieur à celle du budget voté !!!";
+            $timeout(function () {
+                $scope.isnumber = true;
+                angular.element('#editForm'+id).triggerHandler('click');
+            },5000);
+            return
         }
        // return donneesBudgetService.setDonnesBudgets(data);
          donneesBudgetService.setDonnesBudgets(data)
@@ -65,6 +74,14 @@ gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTa
         });
     };
 
+    $scope.setMarkeur = function (data, id,budget) {
+       if (!isNumeric(data)) {
+           angular.element(document.getElementById("gb"+id+budget)).find("input").css('border','2px solid #a94442');
+       }
+       else {
+           angular.element(document.getElementById("gb"+id+budget)).find("input").css('border','2px solid #b2dba1');
+       }
+    };
 
 
     $(document).on('change', 'input:radio[id^="chkcommune"]', function (event) {

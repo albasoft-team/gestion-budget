@@ -31,9 +31,10 @@ class DonneesBudgetController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $donneesBudgets = $em->getRepository('GestionBudgetBundle:DonneesBudget')->findAll();
-
+        $chapitres = $em->getRepository('GestionBudgetBundle:Chapitre')->findAll();
         return $this->render('donneesbudget/index.html.twig', array(
             'donneesBudgets' => $donneesBudgets,
+            'chapitres' => $chapitres
         ));
     }
 
