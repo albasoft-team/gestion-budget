@@ -14,7 +14,8 @@ class RegionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nomRegion', TextType::class, array('attr' => array('class' => 'form-control')));
+        $builder->add('nomRegion', TextType::class, array('attr' => array('class' => 'form-control')))
+                ->add('codeRegion',TextType::class,  array('attr' => array('class' => 'form-control')));
     }
     
     /**

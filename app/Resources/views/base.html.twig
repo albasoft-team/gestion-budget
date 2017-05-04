@@ -39,15 +39,16 @@
                                     <span class="caret"></span></button>
 
                                 <ul class="dropdown-menu list-group" role="menu" aria-labelledby="menu2">
-
                                     <li class="list-item"><a href="{{ path('commune_index') }}">Compte</a></li>
-
                                     <li class="divider"></li>
-
                                     <li class="list-item"><a href="{{ path('chapitre_index') }}">Chapitre</a></li>
-
                                     <li class="divider"></li>
-
+                                    <li class="list-item"><a href="{{ path('region_index') }}">Region</a>
+                                    </li><li class="divider"></li>
+                                    <li class="list-item"><a href="{{ path('departement_index') }}">Departement</a></li>
+                                    </li><li class="divider"></li>
+                                    <li class="list-item"><a href="{{ path('commune_index') }}">Commune</a></li>
+                                    <li class="divider"></li>
                                     <li class="list-item"><a href="{{ path('donneesbudget_new') }}">Donnes Budgetaires</a></li>
 
                                 </ul>
@@ -99,6 +100,7 @@
         {% block javascripts %}{% endblock %}
     <script src="{{ asset('front-end/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('bundles/gestionbudget/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('front-end/node_modules/fusioncharts/fusioncharts.js') }}"></script>
     <script src="{{ asset('front-end/bower_components/angular/angular.min.js') }}"></script>
     <script src="{{ asset('front-end/app.js') }}"></script>
     <script src="{{ asset('front-end/services/DBService.js') }}"></script>
@@ -106,6 +108,13 @@
     <script src="{{ asset('front-end/bower_components/angular-xeditable/dist/js/xeditable.min.js') }}"></script>
     <script src="{{ asset('front-end/node_modules/angular-smart-table/dist/smart-table.min.js') }}"></script>
     <script src="{{ asset('front-end/node_modules/ng-table/bundles/ng-table.min.js') }}"></script>
+    <script src="{{ asset('front-end/angular-fusioncharts.min.js') }}"></script>
+    <script src="{{ asset('front-end/node_modules/fusioncharts/fusioncharts.maps.js') }}"></script>
+    <script src="{{ asset('front-end/node_modules/fusioncharts/maps/fusioncharts.senegal.js') }}"></script>
+    <script src="{{ asset('front-end/node_modules/fusioncharts/themes/fusioncharts.theme.carbon.js') }}"></script>
+    <script src="{{ asset('front-end/node_modules/fusioncharts/themes/fusioncharts.theme.fint.js') }}"></script>
+    <script src="{{ asset('front-end/node_modules/fusioncharts/themes/fusioncharts.theme.ocean.js') }}"></script>
+    <script src="{{ asset('front-end/node_modules/fusioncharts/themes/fusioncharts.theme.zune.js') }}"></script>
     {#<script src="{{ asset('front-end/node_modules/bootstrap-validator/dist/validator.min.js') }}"></script>#}
     {#<script src="{{ asset('front-end/node_modules/x-editable/dist/bootstrap-editable/js/bootstrap-editable.min.js') }}"></script>#}
     </body>

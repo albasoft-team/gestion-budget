@@ -22,6 +22,7 @@
                             <th style="width: 20%; text-align: center"><em class="glyphicon glyphicon-cog"></em></th>
                             <th class="hidden-xs">ID</th>
                             <th>Nom region</th>
+                            <th>Code région</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,6 +35,7 @@
                                 </td>
                                 <td class="hidden-xs"><a href="{{ path('region_show', { 'id': region.id }) }}">{{ region.id }}</a></td>
                                 <td>{{ region.nomRegion }}</td>
+                                <td>{{ region.codeRegion }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

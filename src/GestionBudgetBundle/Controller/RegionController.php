@@ -88,12 +88,12 @@ class RegionController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('region_edit', array('id' => $region->getId()));
+            return $this->redirectToRoute('region_index');
         }
 
         return $this->render('region/edit.html.twig', array(
             'region' => $region,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

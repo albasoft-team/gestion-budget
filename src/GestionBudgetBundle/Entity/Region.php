@@ -28,6 +28,13 @@ class Region
      */
     private $nomRegion;
 
+    /**
+         * @var string
+         *
+         * @ORM\Column(name="codeRegion", type="string", length=255)
+         */
+        private $codeRegion;
+
 
     /**
      * @ORM\OneToMany(targetEntity="Departement", mappedBy="region")
@@ -109,4 +116,28 @@ class Region
         return $this->departements;
     }
 
+
+    /**
+     * Set codeRegion
+     *
+     * @param string $codeRegion
+     *
+     * @return Region
+     */
+    public function setCodeRegion($codeRegion)
+    {
+        $this->codeRegion = $codeRegion;
+
+        return $this;
+    }
+
+    /**
+     * Get codeRegion
+     *
+     * @return string
+     */
+    public function getCodeRegion()
+    {
+        return $this->codeRegion;
+    }
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-var gestionBudget = angular.module('gestionBudget',['xeditable','smart-table','ngTable'])
+var gestionBudget = angular.module('gestionBudget',['xeditable','smart-table','ngTable','ng-fusioncharts'])
     .config(['$interpolateProvider', function ($interpolateProvider) {
         $interpolateProvider.startSymbol('[[');
         $interpolateProvider.endSymbol(']]');

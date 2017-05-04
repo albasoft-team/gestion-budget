@@ -3,7 +3,6 @@
 gestionBudget.factory('donneesBudgetService', function ($http, $q) {
     var factory = {
         donneesBudget : false,
-        chapitre: false,
         getDonneesBudget : function () {
             var  deferred = $q.defer();
             if (factory.donneesBudget !== false) {

@@ -12,8 +12,17 @@
 {% block body %}
     <div class="row container" ng-controller="donneesBudget">
         <div class="col-md-12" ng-init="getChapitre()" >
-
             <div class="col-xs-12 col-md-12 col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Sénégal</div>
+                    <div class="panel-body">
+                        <div style="width: 400px; display: block;margin-left: auto; margin-right: auto" id="chart-container"></div>
+                        {#<fusioncharts#}
+                        {#type="maps/senegal"#}
+                        {#datasource="[[donneesDataSource]]"#}
+                        {#></fusioncharts>#}
+                    </div>
+                </div>
                 <div class="alert alert-success">
                     <p>Département : {{ app.user.departement.nomDepartement }}</p>
                     {% if app.user.commune %}
@@ -36,8 +45,9 @@
                             </div>
                             <div class="col-lg-4 text-right">
                                 <select  placeholder="chapitre" ng-model="chapitrecompte" class="form-control input-lg" type="search">
+                                    <option></option>
                                     {% for chap in chapitres %}
-                                        <option> {{ chap.designation }}</option>
+                                        <option value="{{ chap.designation }}"> {{ chap.designation }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -99,10 +109,10 @@
                                     <td align="center" style="white-space: nowrap">
                                         <!-- form -->
                                         <form editable-form  name="rowform" onbeforesave="saveDonneeBudget($data, donneesBudget.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == donneesBudget">
-                                            <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                                            <button id="validForm" type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
                                                 <i class="glyphicon glyphicon-ok"></i>
                                             </button>
-                                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                                            <button  type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
                                                 <i class="glyphicon glyphicon-trash"></i>
                                             </button>
                                         </form>
