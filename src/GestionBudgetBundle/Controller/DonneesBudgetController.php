@@ -39,7 +39,7 @@ class DonneesBudgetController extends Controller
     }
 
     /**
-     * @Route("/allDonneesBudget")
+     * @Route("/allDonneesBudget", options={"expose"=true}, name="all_donneesbudget")
      * @Method("GET")
      */
     public function getAllDB() {
@@ -71,7 +71,7 @@ class DonneesBudgetController extends Controller
     /**
      * @param Request $request
      * @return mixed
-     * @Route("/editDonneeBudget")
+     * @Route("/editDonneeBudget", options={"expose"=true}, name="edit_donneesbudget")
      * @Method("POST")
      */
     public function editDonneeBudget(Request $request) {

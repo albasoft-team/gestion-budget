@@ -9,7 +9,7 @@ gestionBudget.factory('donneesBudgetService', function ($http, $q) {
                 deferred.resolve(factory.donneesBudget);
             }
             else {
-                $http.get('/donneesbudget/allDonneesBudget')
+                $http.get(Routing.generate('all_donneesbudget'))
                     .then(function (data, status) {
                         factory.donneesBudget = data;
                         deferred.resolve(factory.donneesBudget);
@@ -21,7 +21,7 @@ gestionBudget.factory('donneesBudgetService', function ($http, $q) {
         },
         setDonnesBudgets : function (donnees) {
             var  deferred = $q.defer();
-            $http.post('/donneesbudget/editDonneeBudget', donnees, { headers : {'Content-Type': 'application/json'}})
+            $http.post(Routing.generate('edit_donneesbudget'), donnees)
                 .then(function (data,status) {
                     factory.donneesBudget = data;
                     deferred.resolve(factory.donneesBudget);
@@ -30,21 +30,6 @@ gestionBudget.factory('donneesBudgetService', function ($http, $q) {
                 }));
             return deferred.promise ;
         }
-        // getChapitre : function () {
-        //     var  deferred = $q.defer();
-        //     if (factory.chapitre !== false) {
-        //         deferred.resolve(factory.chapitre);
-        //     }
-        //     else {
-        //         $http.get('/chapitre/allDonneesBudget')
-        //             .then(function (data, status) {
-        //                 factory.chapitre = data;
-        //                 deferred.resolve(factory.chapitre);
-        //             },(function (data, status) {
-        //                 deferred.reject('impossible de recuperer les donnees');
-        //             }));
-        //     }
-        // }
     };
     return factory;
 });

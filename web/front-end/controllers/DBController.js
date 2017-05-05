@@ -5,7 +5,7 @@ gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTa
     $scope.chapitrecompte = '';
     $scope.libellecompte = '';
     $scope.numerocompte = '';
-    $scope.shearch = {compte:{numeroCompte : '',libelle :'', chapitre : {designation:''}}}
+    $scope.shearch = {compte:{numeroCompte : '',libelle :'', chapitre : {designation:''}}};
 
         //$scope.allDonnessBudget = donneesBudgetService.getDonneesBudget()
         donneesBudgetService.getDonneesBudget()
