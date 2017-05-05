@@ -5,6 +5,7 @@ gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTa
     $scope.chapitrecompte = '';
     $scope.libellecompte = '';
     $scope.numerocompte = '';
+    $scope.shearch = {compte:{numeroCompte : '',libelle :'', chapitre : {designation:''}}}
 
         //$scope.allDonnessBudget = donneesBudgetService.getDonneesBudget()
         donneesBudgetService.getDonneesBudget()
@@ -123,149 +124,67 @@ gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTa
                 "data": [
                     {
                         "id": "SN.DK",
-                        "value": "4128"
+                        "value": ""
                     },
                     {
                         "id": "SN.ST",
-                        "value": "47013"
+                        "value": ""
                     },
                     {
                         "id": "SN.LG",
-                        "value": "50737"
+                        "value": ""
                     },
                     {
                         "id": "SN.MT",
-                        "value": "41230"
+                        "value": ""
                     },
                     {
                         "id": "SN.TC",
-                        "value": "70828"
+                        "value": ""
                     },
                     {
                         "id": "SN.KD",
-                        "value": "69557"
+                        "value": ""
                     },
                     {
                         "id": "SN.ZG",
-                        "value": "69791"
+                        "value": ""
                     },
                     {
                         "id": "SN.KL",
-                        "value": "48139"
+                        "value": ""
                     },
                     {
                         "id": "SN.FK",
-                        "value": "54529"
+                        "value": ""
                     },
                     {
                         "id": "SN.DB",
-                        "value": "86482"
+                        "value": ""
                     },
                     {
                         "id": "SN.TH",
-                        "value": "86482"
+                        "value": ""
                     }
 
                 ]
             }
         }).render();
     });
-    $scope.donneesDataSource =
-        {
-            "chart": {
-                "animation": "0",
-                "showbevel": "0",
-                "usehovercolor": "1",
-                "canvasbordercolor": "FFFFFF",
-                "bordercolor": "FFFFFF",
-                "showlegend": "1",
-                "showshadow": "0",
-                "legendposition": "BOTTOM",
-                "legendborderalpha": "0",
-                "legendbordercolor": "ffffff",
-                "legendallowdrag": "0",
-                "legendshadow": "0",
-                "caption": "Website Visits for the month of Jan 2014",
-                "connectorcolor": "000000",
-                "fillalpha": "80",
-                "hovercolor": "CCCCCC",
-                "showborder": 0
-            },
-            "colorrange": {
-                "minvalue": "0",
-                "startlabel": "Low",
-                "endlabel": "High",
-                "code": "e44a00",
-                "gradient": "1",
-                "color": [
-                    {
-                        "maxvalue": 30000,
-                        "displayvalue": "Average",
-                        "code": "f8bd19"
-                    },
-                    {
-                        "maxvalue": 100000,
-                        "code": "6baa01"
-                    }
-                ],
-                "maxvalue": 0
-            },
-            "data": [
-                        {
-                            "id": "SN.DK",
-                            "value": "4128"
-                        },
-                        {
-                            "id": "SN.ST",
-                            "value": "47013"
-                        },
-                        {
-                            "id": "SN.LG",
-                            "value": "50737"
-                        },
-                        {
-                            "id": "SN.MT",
-                            "value": "41230"
-                        },
-                        {
-                            "id": "SN.TC",
-                            "value": "70828"
-                        },
-                        {
-                            "id": "SN.KD",
-                            "value": "69557"
-                        },
-                        {
-                            "id": "SN.ZG",
-                            "value": "69791"
-                        },
-                        {
-                            "id": "SN.KL",
-                            "value": "48139"
-                        },
-                        {
-                            "id": "SN.FK",
-                            "value": "54529"
-                        },
-                        {
-                            "id": "SN.DB",
-                            "value": "86482"
-                        },
-                        {
-                            "id": "SN.TH",
-                            "value": "86482"
-                        }
 
-                ]
-        };
+    $scope.enableBtn = function (id) {
+        if (angular.element(document.getElementById("validForm"+id)).attr("disabled")) {
+            angular.element(document.getElementById("validForm"+id)).removeAttr("disabled","disabled");
+        }
+    };
     $scope.setMarkeur = function (data, id,budget) {
        if (!isNumeric(data)) {
            angular.element(document.getElementById("gb"+id+budget)).find("input").css('border','2px solid #a94442');
-           angular.element(document.getElementById("validForm")).attr("disabled","disabled");
+           angular.element(document.getElementById("validForm"+id)).attr("disabled","disabled");
        }
        else {
            angular.element(document.getElementById("gb"+id+budget)).find("input").css('border','2px solid #b2dba1');
-           angular.element(document.getElementById("validForm")).removeAttr("disabled","disabled");
+           angular.element(document.getElementById("validForm"+id)).removeAttr("disabled","disabled");
        }
     };
 

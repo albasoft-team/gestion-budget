@@ -7,6 +7,12 @@
         /*table input.ng-valid {*/
             /*background-color:lightgreen;*/
         /*}*/
+       /*.ng-invalid {*/
+            /*border:1px solid #f00;*/
+        /*}*/
+        input.ng-invalid-pattern {
+           border: 2px solid red;
+        }
     </style>
     {% endblock %}
 {% block body %}
@@ -32,19 +38,28 @@
                  <div id="alert" ng-hide="isnumber" class="alert alert-danger">
                      <p>[[msgErreur]]</p>
                  </div>
+                {#<form name='myform'>#}
+                    {#<input type="text" name='ip' ng-model="usd" ng-pattern="/^\-?\d+((\.|\,)\d+)?$/"#}
+                           {#ng-change="convert_to_btc()" placeholder="USD"/>#}
+
+                    {#<p ng-show='myform.ip.$invalid'>Error</p>#}
+                {#</form>#}
+                <form name="myform">
+                    <input type="text" ng-model="nom" name="nom" ng-pattern="/^\-?\d+((\.|\,)\d+)?$/" class="form-control col-lg-2">
+                </form>
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">Saisie des données budgétaires</div>
                     <div class="panel-body">
                         <div class="row" style="display: flex; padding-bottom: 15px;">
                             <div class="col-lg-4">
-                                <input  placeholder="Numéro compte" ng-model="numerocompte" class=" form-control input-lg" type="search"/>
+                                <input  placeholder="Numéro compte" ng-model="shearch.compte.numeroCompte" class=" form-control input-lg" type="search"/>
                             </div>
                             <div class="col-lg-4">
-                                <input  placeholder="libelle compte" ng-model="libellecompte" class="form-control input-lg" type="search"/>
+                                <input  placeholder="libelle compte" ng-model="shearch.compte.libelle" class="form-control input-lg" type="search"/>
                             </div>
                             <div class="col-lg-4 text-right">
-                                <select  placeholder="chapitre" ng-model="chapitrecompte" class="form-control input-lg" type="search">
+                                <select  placeholder="chapitre" ng-model="shearch.compte.chapitre.designation" class="form-control input-lg" type="search">
                                     <option></option>
                                     {% for chap in chapitres %}
                                         <option value="{{ chap.designation }}"> {{ chap.designation }}</option>
@@ -75,7 +90,8 @@
                                 </thead>
                                 <tbody>
                                 {#{% for donneesBudget in donneesBudgets %}#}
-                                <tr ng-repeat="donneesBudget in $data | filterByNumCompte:numerocompte | filterByLibelleCompte:libellecompte | filterByChapitreCompte:chapitrecompte  track by donneesBudget.id">
+                                {#<tr ng-repeat="donneesBudget in $data | filterByNumCompte:numerocompte | filterByLibelleCompte:libellecompte | filterByChapitreCompte:chapitrecompte  track by donneesBudget.id">#}
+                                <tr ng-repeat="donneesBudget in $data | filter:shearch   track by donneesBudget.id">
 
                                     {#<a href="{{ path('donneesbudget_edit', { 'id': donneesBudget.id }) }}" class="btn btn-default"><em class="glyphicon glyphicon-pencil"></em></a>#}
                                     {#<a class="btn btn-primary" href="{{ path('donneesbudget_show', { 'id': donneesBudget.id }) }}"><em class="glyphicon glyphicon-list"></em></a>#}
@@ -85,20 +101,31 @@
                                     <td>[[ donneesBudget.compte.libelle ]]</td>
                                     <td>[[ donneesBudget.compte.chapitre.designation ]]</td>
                                     <td id="gb[[donneesBudget.id]][[donneesBudget.budgetDemande]]">
-                                    <span  e-ng-change="setMarkeur($data,donneesBudget.id,donneesBudget.budgetDemande)" editable-text="donneesBudget.budgetDemande" e-name="budgetDemande" e-form="rowform" onbeforesave="">
+                                    <span    e-ng-change="setMarkeur($data,donneesBudget.id,donneesBudget.budgetDemande)" editable-text="donneesBudget.budgetDemande" e-name="budgetDemande" e-form="rowform" onbeforesave="">
                                      [[ donneesBudget.budgetDemande || 'empty' ]]
                                     </span>
+                                    {#<span    e-pattern="/^\-?\d+((\.|\,)\d+)?$/" editable-text="donneesBudget.budgetDemande" e-name="budgetDemande" e-form="rowform" onbeforesave="">#}
+                                     {#[[ donneesBudget.budgetDemande || 'empty' ]]#}
+                                    {#</span>#}
+
 
                                     </td>
                                     <td id="gb[[donneesBudget.id]][[donneesBudget.budgetVote]]">
                                     <span   e-ng-change="setMarkeur($data,donneesBudget.id,donneesBudget.budgetVote)"  editable-text="donneesBudget.budgetVote" e-name="budgetVote" e-form="rowform" onbeforesave="">
                                      [[ donneesBudget.budgetVote || 'empty' ]]
                                     </span>
+                                    {#<span    editable-text="donneesBudget.budgetVote" e-name="budgetVote" e-form="rowform" onbeforesave="">#}
+                                     {#[[ donneesBudget.budgetVote || 'empty' ]]#}
+                                    {#</span>#}
                                     </td>
                                     <td id="gb[[donneesBudget.id]][[donneesBudget.budgetrecouvre]]">
                                     <span  e-ng-change="setMarkeur($data,donneesBudget.id,donneesBudget.budgetrecouvre)" editable-text="donneesBudget.budgetrecouvre" e-name="budgetrecouvre" e-form="rowform" onbeforesave="">
                                      [[ donneesBudget.budgetrecouvre || 'empty' ]]
                                     </span>
+                                    {#<span  editable-text="donneesBudget.budgetrecouvre" e-name="budgetrecouvre" e-form="rowform" onbeforesave="">#}
+                                     {#[[ donneesBudget.budgetrecouvre || 'empty' ]]#}
+                                    {#</span>#}
+
                                     </td>
                                     <td>[[ donneesBudget.dateSaisie.timestamp | date : 'dd/MM/yyyy' ]]</td>
                                     <td ng-if="(donneesBudget.budgetrecouvre !== null || donneesBudget.budgetVote !== null)">[[(donneesBudget.budgetrecouvre / donneesBudget.budgetVote) * 100 | number : 2]] %</td>
@@ -109,7 +136,7 @@
                                     <td align="center" style="white-space: nowrap">
                                         <!-- form -->
                                         <form editable-form  name="rowform" onbeforesave="saveDonneeBudget($data, donneesBudget.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == donneesBudget">
-                                            <button id="validForm" type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                                            <button id="validForm[[donneesBudget.id]]" type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
                                                 <i class="glyphicon glyphicon-ok"></i>
                                             </button>
                                             <button  type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
@@ -117,7 +144,7 @@
                                             </button>
                                         </form>
                                         <div class="buttons"  ng-show="!rowform.$visible">
-                                            <button type="button" id="editForm[[donneesBudget.id]]" class="btn btn-success" ng-click="rowform.$show()"><i class="glyphicon glyphicon-pencil"></i></button>
+                                            <button type="button" id="editForm[[donneesBudget.id]]" class="btn btn-success" ng-click="rowform.$show();enableBtn([[donneesBudget.id]])"><i class="glyphicon glyphicon-pencil"></i></button>
                                             {#<button type="button" class="btn btn-danger" ng-click="removeUser($index)">del</button>#}
                                         </div>
                                     </td>
@@ -133,6 +160,35 @@
                 </div>
             </div>
     </div>
+
+        {#<div ng-init="friends = [{name:'John', phone:'555-1276'},#}
+                         {#{name:'Mary', phone:'800-BIG-MARY'},#}
+                         {#{name:'Mike', phone:'555-4321'},#}
+                         {#{name:'Adam', phone:'555-5678'},#}
+                         {#{name:'Julie', phone:'555-8765'},#}
+                         {#{name:'Juliette', phone:'555-5678'}]"></div>#}
+
+        {#<label>Search: <input ng-model="searchText"></label>#}
+
+        {#<table id="searchTextResults">#}
+            {#<tr><th>Name</th><th>Phone</th></tr>#}
+            {#<tr ng-repeat="friend in friends | filter:searchText">#}
+                {#<td>{{friend.name}}</td>#}
+                {#<td>{{friend.phone}}</td>#}
+            {#</tr>#}
+        {#</table>#}
+        {#<hr>#}
+        {#<label>Any: <input ng-model="search.$"></label> <br>#}
+        {#<label>Name only <input ng-model="search.name"></label><br>#}
+        {#<label>Phone only <input ng-model="search.phone"></label><br>#}
+        {#<label>Equality <input type="checkbox" ng-model="strict"></label><br>#}
+        {#<table id="searchObjResults">#}
+            {#<tr><th>Name</th><th>Phone</th></tr>#}
+            {#<tr ng-repeat="friendObj in friends | filter:search:strict">#}
+                {#<td>{{friendObj.name}}</td>#}
+                {#<td>{{friendObj.phone}}</td>#}
+            {#</tr>#}
+        {#</table>#}
     </div>
 
 {% endblock %}

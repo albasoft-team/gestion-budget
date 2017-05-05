@@ -23,6 +23,7 @@
                             <th style="width: 20%; text-align: center"><em class="glyphicon glyphicon-cog"></em></th>
                             <th class="hidden-xs">ID</th>
                             <th>Nom commune</th>
+                            <th>Département</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -35,6 +36,7 @@
                                 </td>
                                 <td class="hidden-xs"><a href="{{ path('commune_show', { 'id': commune.id }) }}">{{ commune.id }}</a></td>
                                 <td>{{ commune.nomCommune }}</td>
+                                <td>{{ commune.departement.nomDepartement }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

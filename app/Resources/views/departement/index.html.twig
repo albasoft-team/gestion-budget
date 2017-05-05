@@ -34,6 +34,10 @@
                                 </td>
                                 <td class="hidden-xs"><a href="{{ path('departement_show', { 'id': departement.id }) }}">{{ departement.id }}</a></td>
                                 <td>{{ departement.nomDepartement }}</td>
+                                <td><select>
+                                        {{ departement.communes }}
+                                    </select></td>
+                                <td>{{ departement.nomDepartement }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
