@@ -1,0 +1,1 @@
+fos.Router.setData({"base_url":"","routes":{"all_donneesbudget":{"tokens":[["text","\/donneesbudget\/allDonneesBudget"]],"defaults":[],"requirements":[],"hosttokens":[]},"edit_donneesbudget":{"tokens":[["text","\/donneesbudget\/editDonneeBudget"]],"defaults":[],"requirements":[],"hosttokens":[]}},"prefix":"","host":"localhost","scheme":"http"});
