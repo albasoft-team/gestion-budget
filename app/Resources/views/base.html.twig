@@ -59,10 +59,10 @@
                 {% endif %}
 
                 <ul class="nav navbar-nav pull-right" style="color: white; padding-top: 8px">
-                    {% if is_granted("ROLE_ADMIN") %}
-                    <a href="{{ path('fos_user_registration_register') }}"  style="color: white" ><span style="color: white" class="glyphicon glyphicon-user"></span> Créer compte</a>
+                    {#{% if is_granted("ROLE_ADMIN") %}#}
+                    {#<a href="{{ path('fos_user_registration_register') }}"  style="color: white" ><span style="color: white" class="glyphicon glyphicon-user"></span> Créer compte</a>#}
 
-                    {% endif %}
+                    {#{% endif %}#}
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <a style="color: white"href="{{ path('fos_user_security_logout') }}" ><span style="color: white; margin-left: 15px" class="glyphicon glyphicon-log-out"></span>
                             {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
