@@ -28,16 +28,18 @@ class Region
      */
     private $nomRegion;
 
+    /**
+         * @var string
+         *
+         * @ORM\Column(name="codeRegion", type="string", length=255)
+         */
+        private $codeRegion;
+
 
     /**
      * @ORM\OneToMany(targetEntity="Departement", mappedBy="region")
      */
     private $departements;
-
-    /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="region")
-     */
-    private $users;
 
     /**
      * Get id
@@ -113,4 +115,5 @@ class Region
     {
         return $this->departements;
     }
+
 }

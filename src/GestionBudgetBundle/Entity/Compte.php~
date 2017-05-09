@@ -42,8 +42,7 @@ class Compte
     private $chapitre;
 
     /**
-     * @ORM\OneToOne(targetEntity="DonneesBudget", inversedBy="compte")
-     * @ORM\JoinColumn(name="donneesbuget_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="DonneesBudget", mappedBy="compte")
      */
     private $donneesbudget;
 
@@ -105,5 +104,53 @@ class Compte
     public function getNumeroCompte()
     {
         return $this->numeroCompte;
+    }
+
+    /**
+     * Set chapitre
+     *
+     * @param \GestionBudgetBundle\Entity\Chapitre $chapitre
+     *
+     * @return Compte
+     */
+    public function setChapitre(\GestionBudgetBundle\Entity\Chapitre $chapitre = null)
+    {
+        $this->chapitre = $chapitre;
+
+        return $this;
+    }
+
+    /**
+     * Get chapitre
+     *
+     * @return \GestionBudgetBundle\Entity\Chapitre
+     */
+    public function getChapitre()
+    {
+        return $this->chapitre;
+    }
+
+    /**
+     * Set donneesbudget
+     *
+     * @param \GestionBudgetBundle\Entity\DonneesBudget $donneesbudget
+     *
+     * @return Compte
+     */
+    public function setDonneesbudget(\GestionBudgetBundle\Entity\DonneesBudget $donneesbudget = null)
+    {
+        $this->donneesbudget = $donneesbudget;
+
+        return $this;
+    }
+
+    /**
+     * Get donneesbudget
+     *
+     * @return \GestionBudgetBundle\Entity\DonneesBudget
+     */
+    public function getDonneesbudget()
+    {
+        return $this->donneesbudget;
     }
 }
