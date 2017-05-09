@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Axes list</h1>
+    <a class="btn btn-success" style="margin-bottom: 10px" href="{{ path('axe_new') }}"><i class="glyphicon glyphicon-plus pull-right"></i></a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Designation</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for axe in axes %}
+            <tr>
+                <td><a href="{{ path('axe_show', { 'id': axe.id }) }}">{{ axe.id }}</a></td>
+                <td>{{ axe.designation }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('axe_show', { 'id': axe.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('axe_edit', { 'id': axe.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

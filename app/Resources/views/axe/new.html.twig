@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="page-header">Création d'un axe d'analyse</h1>
+    <a class="btn btn-primary" href="{{ path('axe_index') }}"><i class="glyphicon glyphicon-list"></i></a>
+    {{ form_start(form, {'method': 'post', 'action': path('axe_new')} ) }}
+        {{ form_widget(form) }}
+        <input style="margin-top: 10px  " class="btn btn-success" type="submit" value="Create" />
+    {{ form_end(form) }}
+{% endblock %}

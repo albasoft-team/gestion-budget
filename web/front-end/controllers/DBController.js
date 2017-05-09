@@ -1,10 +1,11 @@
 'use strict';
 
-gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTableParams','$timeout', function ($scope, donneesBudgetService, NgTableParams,$timeout) {
+gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTableParams','$timeout','$locale', function ($scope, donneesBudgetService, NgTableParams,$timeout, $locale) {
     $scope.allDonneesBudget = [];
     $scope.chapitrecompte = '';
     $scope.libellecompte = '';
     $scope.numerocompte = '';
+    $locale.NUMBER_FORMATS.GROUP_SEP = ' ';
     $scope.shearch = {compte:{numeroCompte : '',libelle :'', chapitre : {designation:''}}};
 
         //$scope.allDonnessBudget = donneesBudgetService.getDonneesBudget()
@@ -172,13 +173,19 @@ gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTa
         }).render();
     });
 
-    $scope.enableBtn = function (id) {
+    $scope.enableBtn = function (id, budget) {
+        // $('.money').mask('000.000.000.000.000,00', {reverse: true});
+        //  $('.editable-input').mask('#.##0,00', {reverse: false});
+         $('.editable-input').mask('000 000 000 000 000', {reverse: true});
+         $('.editable-input').mask('#00 000 000 000 000', {reverse: true});
+         $('.editable-input').mask('##0 000 000 000 000', {reverse: true});
+         $('#dbTable div ').addClass('popover-wrapper');
         if (angular.element(document.getElementById("validForm"+id)).attr("disabled")) {
             angular.element(document.getElementById("validForm"+id)).removeAttr("disabled","disabled");
         }
     };
     $scope.setMarkeur = function (data, id,budget) {
-       if (!isNumeric(data)) {
+       if (!data.match(/[\d\s]+/g)) {
            angular.element(document.getElementById("gb"+id+budget)).find("input").css('border','2px solid #a94442');
            angular.element(document.getElementById("validForm"+id)).attr("disabled","disabled");
        }

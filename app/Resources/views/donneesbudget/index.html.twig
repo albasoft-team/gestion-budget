@@ -53,13 +53,13 @@
                     <div class="panel-body">
                         <div class="row" style="display: flex; padding-bottom: 15px;">
                             <div class="col-lg-4">
-                                <input  placeholder="Numéro compte" ng-model="shearch.compte.numeroCompte" class=" form-control input-lg" type="search"/>
+                                <input  placeholder="Numéro compte" ng-model="shearch.compte.numeroCompte" class=" form-control input-md" type="search"/>
                             </div>
                             <div class="col-lg-4">
-                                <input  placeholder="libelle compte" ng-model="shearch.compte.libelle" class="form-control input-lg" type="search"/>
+                                <input  placeholder="libelle compte" ng-model="shearch.compte.libelle" class="form-control input-md" type="search"/>
                             </div>
                             <div class="col-lg-4 text-right">
-                                <select  placeholder="chapitre" ng-model="shearch.compte.chapitre.designation" class="form-control input-lg" type="search">
+                                <select  placeholder="chapitre" ng-model="shearch.compte.chapitre.designation" class="form-control input-md" type="search">
                                     <option></option>
                                     {% for chap in chapitres %}
                                         <option value="{{ chap.designation }}"> {{ chap.designation }}</option>
@@ -69,7 +69,7 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table  ng-table="allDonnees"  class="table table-striped table-bordered table-list text-center">
+                            <table id="dbTable"  ng-table="allDonnees"  class="table table-striped table-bordered table-list text-center">
                                 <thead>
                                 <tr>
                                     {#<th class="hidden-xs">ID</th>#}
@@ -84,7 +84,7 @@
                                     {#<th>Departement</th>#}
                                     {#<th>commune</th>#}
                                     <th>User</th>
-                                    <th style="width: 20%; text-align: center"><em class="glyphicon glyphicon-cog"></em></th>
+                                    <th><em class="glyphicon glyphicon-cog"></em></th>
                                 </tr>
                                 {#<tr><input st-search="budgetDemande" class="form-control" placeholder="global search ..." type="text"/></tr>#}
                                 </thead>
@@ -101,8 +101,8 @@
                                     <td>[[ donneesBudget.compte.libelle ]]</td>
                                     <td>[[ donneesBudget.compte.chapitre.designation ]]</td>
                                     <td id="gb[[donneesBudget.id]][[donneesBudget.budgetDemande]]">
-                                    <span    e-ng-change="setMarkeur($data,donneesBudget.id,donneesBudget.budgetDemande)" editable-text="donneesBudget.budgetDemande" e-name="budgetDemande" e-form="rowform" onbeforesave="">
-                                     [[ donneesBudget.budgetDemande || 'empty' ]]
+                                    <span  e-ng-change="setMarkeur($data,donneesBudget.id,donneesBudget.budgetDemande)" editable-text="donneesBudget.budgetDemande" e-name="budgetDemande" e-form="rowform" onbeforesave="">
+                                     [[ donneesBudget.budgetDemande  | number  ]]
                                     </span>
                                     {#<span    e-pattern="/^\-?\d+((\.|\,)\d+)?$/" editable-text="donneesBudget.budgetDemande" e-name="budgetDemande" e-form="rowform" onbeforesave="">#}
                                      {#[[ donneesBudget.budgetDemande || 'empty' ]]#}
@@ -110,9 +110,9 @@
 
 
                                     </td>
-                                    <td id="gb[[donneesBudget.id]][[donneesBudget.budgetVote]]">
+                                    <td  id="gb[[donneesBudget.id]][[donneesBudget.budgetVote]]">
                                     <span   e-ng-change="setMarkeur($data,donneesBudget.id,donneesBudget.budgetVote)"  editable-text="donneesBudget.budgetVote" e-name="budgetVote" e-form="rowform" onbeforesave="">
-                                     [[ donneesBudget.budgetVote || 'empty' ]]
+                                     [[ donneesBudget.budgetVote | number ]]
                                     </span>
                                     {#<span    editable-text="donneesBudget.budgetVote" e-name="budgetVote" e-form="rowform" onbeforesave="">#}
                                      {#[[ donneesBudget.budgetVote || 'empty' ]]#}
@@ -120,7 +120,7 @@
                                     </td>
                                     <td id="gb[[donneesBudget.id]][[donneesBudget.budgetrecouvre]]">
                                     <span  e-ng-change="setMarkeur($data,donneesBudget.id,donneesBudget.budgetrecouvre)" editable-text="donneesBudget.budgetrecouvre" e-name="budgetrecouvre" e-form="rowform" onbeforesave="">
-                                     [[ donneesBudget.budgetrecouvre || 'empty' ]]
+                                     [[ donneesBudget.budgetrecouvre | number ]]
                                     </span>
                                     {#<span  editable-text="donneesBudget.budgetrecouvre" e-name="budgetrecouvre" e-form="rowform" onbeforesave="">#}
                                      {#[[ donneesBudget.budgetrecouvre || 'empty' ]]#}
@@ -144,7 +144,7 @@
                                             </button>
                                         </form>
                                         <div class="buttons"  ng-show="!rowform.$visible">
-                                            <button type="button" id="editForm[[donneesBudget.id]]" class="btn btn-success" ng-click="rowform.$show();enableBtn([[donneesBudget.id]])"><i class="glyphicon glyphicon-pencil"></i></button>
+                                            <button type="button" id="editForm[[donneesBudget.id]]" class="btn btn-success" ng-click="rowform.$show();enableBtn([[donneesBudget.id]],[[donneesBudget.budgetVote]])"><i class="glyphicon glyphicon-pencil"></i></button>
                                             {#<button type="button" class="btn btn-danger" ng-click="removeUser($index)">del</button>#}
                                         </div>
                                     </td>

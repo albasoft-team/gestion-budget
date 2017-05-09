@@ -79,9 +79,9 @@ class DonneesBudgetController extends Controller
         $id = $data['id'];
         $em = $this->getDoctrine()->getManager();
         $donneesBudget = $em->getRepository('GestionBudgetBundle:DonneesBudget')->find($id);
-        $donneesBudget->setBudgetDemande($data['budgetDemande']);
-        $donneesBudget->setBudgetVote($data['budgetVote']);
-        $donneesBudget->setBudgetrecouvre($data['budgetrecouvre']);
+        $donneesBudget->setBudgetDemande(str_replace(' ','',$data['budgetDemande']));
+        $donneesBudget->setBudgetVote(str_replace(' ','',$data['budgetVote']));
+        $donneesBudget->setBudgetrecouvre(str_replace(' ','',$data['budgetrecouvre']));
         $donneesBudget->setDateModifiee(new \DateTime());
 
         $user = $this->getUser();
