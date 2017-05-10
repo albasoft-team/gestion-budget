@@ -12,6 +12,7 @@
 namespace UserBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
+use UserBundle\Entity\User;
 
 /**
  * Controller managing the registration.
@@ -30,5 +31,25 @@ class RegistrationController extends  BaseController
             'users' => $users,
         ));
     }
+
+//    /**
+//     * Deletes a user entity.
+//     *
+//     * @Route("/{id}", name="user_delete")
+//     * @Method("DELETE")
+//     */
+//    public function deleteAction(Request $request, User $user)
+//    {
+//        $form = $this->createDeleteForm($user);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $em = $this->getDoctrine()->getManager();
+//            $em->remove($user);
+//            $em->flush();
+//        }
+//
+//        return $this->redirectToRoute('fos_user_registration_confirm');
+//    }
 
 }

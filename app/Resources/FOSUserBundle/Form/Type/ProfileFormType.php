@@ -13,6 +13,7 @@ namespace FOS\UserBundle\Form\Type;
 
 use FOS\UserBundle\Util\LegacyFormHelper;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
@@ -47,12 +48,14 @@ class ProfileFormType extends AbstractType
             $constraintsOptions['groups'] = array(reset($options['validation_groups']));
         }
 
-        $builder->add('current_password', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\PasswordType'), array(
+        $builder->add('current_password',TextType::class, array(
             'label' => 'form.current_password',
             'translation_domain' => 'FOSUserBundle',
             'mapped' => false,
             'constraints' => new UserPassword($constraintsOptions),
+            'class' => 'form-control'
         ));
+
     }
 
     /**

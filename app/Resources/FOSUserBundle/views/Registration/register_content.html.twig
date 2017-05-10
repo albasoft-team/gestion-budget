@@ -6,7 +6,7 @@
         <div  style="margin-top: 10px;"></div>
         {{ form_start(form,{'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register register_form','data-toggle':'validator','role':'form'}}) }}
                 {{ form_row(form.username, {'attr': {'class': 'form-control', 'placeholder':'Nom d\'utilisateur'}}) }}
-                {{ form_row(form.nom,{'attr': {'class': 'form-control', 'placeholder':'Nom'}}) }}
+                {{ form_row(form.email,{'attr': {'class': 'form-control', 'placeholder':'Nom'}}) }}
                 {{ form_row(form.prenom,{'attr': {'class': 'form-control', 'placeholder':'Prénom'}}) }}
                 {{ form_row(form.adresse,{'attr': {'class': 'form-control', 'placeholder':'Adresse'}}) }}
         <div class="form-group">
