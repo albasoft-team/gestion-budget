@@ -58,6 +58,12 @@
 }
 
 
+#formAnalyse .form-group {
+    margin: 15px;
+}
+#panelMap {
+    margin: 10px;
+}
 .container {
     padding-left: 0px; !important;
     padding-right: 0px;!important;
