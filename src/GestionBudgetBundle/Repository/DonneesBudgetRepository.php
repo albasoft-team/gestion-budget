@@ -34,4 +34,17 @@ class DonneesBudgetRepository extends \Doctrine\ORM\EntityRepository
         return $donnees;
 
     }
+
+    public function getResultAnalyse($compsant, $axe, $portee) {
+        $rq = $this->createQueryBuilder('db')
+            ->join('db.departement','d')
+            ->join('d.region','region')
+            ->select('SUM(db.budgetVote),region.codeRegion')
+            ->groupBy('region.id')
+            ->join('db.compte','cp')
+            ->where('cp.numeroCompte='.$compsant)
+            ->getQuery();
+
+        return $rq->getScalarResult();
+    }
 }

@@ -17,18 +17,8 @@
     {% endblock %}
 {% block body %}
     <div class="row container" ng-controller="donneesBudget">
-        <div class="col-md-12" ng-init="getChapitre()" >
+        <div class="col-md-12" >
             <div class="col-xs-12 col-md-12 col-lg-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Sénégal</div>
-                    <div class="panel-body">
-                        <div style="width: 400px; display: block;margin-left: auto; margin-right: auto" id="chart-container"></div>
-                        {#<fusioncharts#}
-                        {#type="maps/senegal"#}
-                        {#datasource="[[donneesDataSource]]"#}
-                        {#></fusioncharts>#}
-                    </div>
-                </div>
                 <div class="alert alert-success">
                     <p>Département : {{ app.user.departement.nomDepartement }}</p>
                     {% if app.user.commune %}
@@ -38,15 +28,6 @@
                  <div id="alert" ng-hide="isnumber" class="alert alert-danger">
                      <p>[[msgErreur]]</p>
                  </div>
-                {#<form name='myform'>#}
-                    {#<input type="text" name='ip' ng-model="usd" ng-pattern="/^\-?\d+((\.|\,)\d+)?$/"#}
-                           {#ng-change="convert_to_btc()" placeholder="USD"/>#}
-
-                    {#<p ng-show='myform.ip.$invalid'>Error</p>#}
-                {#</form>#}
-                {#<form name="myform">#}
-                    {#<input type="text" ng-model="nom" name="nom" ng-pattern="/^\-?\d+((\.|\,)\d+)?$/" class="form-control col-lg-2">#}
-                {#</form>#}
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">Saisie des données budgétaires</div>
@@ -160,35 +141,6 @@
                 </div>
             </div>
     </div>
-
-        {#<div ng-init="friends = [{name:'John', phone:'555-1276'},#}
-                         {#{name:'Mary', phone:'800-BIG-MARY'},#}
-                         {#{name:'Mike', phone:'555-4321'},#}
-                         {#{name:'Adam', phone:'555-5678'},#}
-                         {#{name:'Julie', phone:'555-8765'},#}
-                         {#{name:'Juliette', phone:'555-5678'}]"></div>#}
-
-        {#<label>Search: <input ng-model="searchText"></label>#}
-
-        {#<table id="searchTextResults">#}
-            {#<tr><th>Name</th><th>Phone</th></tr>#}
-            {#<tr ng-repeat="friend in friends | filter:searchText">#}
-                {#<td>{{friend.name}}</td>#}
-                {#<td>{{friend.phone}}</td>#}
-            {#</tr>#}
-        {#</table>#}
-        {#<hr>#}
-        {#<label>Any: <input ng-model="search.$"></label> <br>#}
-        {#<label>Name only <input ng-model="search.name"></label><br>#}
-        {#<label>Phone only <input ng-model="search.phone"></label><br>#}
-        {#<label>Equality <input type="checkbox" ng-model="strict"></label><br>#}
-        {#<table id="searchObjResults">#}
-            {#<tr><th>Name</th><th>Phone</th></tr>#}
-            {#<tr ng-repeat="friendObj in friends | filter:search:strict">#}
-                {#<td>{{friendObj.name}}</td>#}
-                {#<td>{{friendObj.phone}}</td>#}
-            {#</tr>#}
-        {#</table>#}
     </div>
 
 {% endblock %}

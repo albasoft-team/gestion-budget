@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div ng-controller="analyseDonnees">
+        <div id="panelMap" class="panel panel-primary">
+            <div class="panel-heading">Sénégal</div>
+            <div class="panel-body">
+                <form id="formAnalyse" class="form-inline" name="myForm">
+                    <div class="form-group">
+                        <label for="numcompte">Composant à analyser:</label>
+                        <select type="text" ng-model="formData.composant" class="form-control" id="numcompte" required>
+                            <option></option>
+                            {% for compte in comptes %}
+                                <option value="{{ compte.numeroCompte }}">{{ compte.numeroCompte }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="axe">Choisir un axe :</label>
+                        <select type="text" ng-model="formData.axe" class="form-control" id="axe" required>
+                            <option></option>
+                            {% for axe in axes  %}
+                                <option value="{{ axe.designation }}">{{ axe.designation }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="axe">Choisir une portée :</label>
+                        <select type="text" ng-model="formData.portee" class="form-control" id="axe" required>
+                            <option></option>
+                            <option>Département</option>
+                            <option>Commune</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" ng-click="analyser(formData)" class="btn btn-default">Analyser</button>
+                    </div>
+                </form>
+                <div style="width: 400px; display: block;margin-left: auto; margin-right: auto" id="chart-container"></div>
+            </div>
+        </div>
+        {#<div id="chartContainer">A world map will load here!</div>#}
+    </div>
+
+{% endblock %}

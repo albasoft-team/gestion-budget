@@ -22,6 +22,8 @@
                             <th style="width: 20%; text-align: center"><em class="glyphicon glyphicon-cog"></em></th>
                             <th class="hidden-xs">ID</th>
                             <th>Nom departement</th>
+                            <th>Les communes</th>
+                            <th>Nom Region</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,10 +36,14 @@
                                 </td>
                                 <td class="hidden-xs"><a href="{{ path('departement_show', { 'id': departement.id }) }}">{{ departement.id }}</a></td>
                                 <td>{{ departement.nomDepartement }}</td>
-                                <td><select>
-                                        {{ departement.communes }}
-                                    </select></td>
-                                <td>{{ departement.nomDepartement }}</td>
+                                <td>
+                                    <select class="form-control">
+                                        {% for commune in departement.communes %}
+                                            <option>{{ commune.nomCommune }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>{{ departement.region.nomRegion }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

@@ -3,6 +3,7 @@
 gestionBudget.factory('donneesBudgetService', function ($http, $q) {
     var factory = {
         donneesBudget : false,
+        donneesanalyse : false,
         getDonneesBudget : function () {
             var  deferred = $q.defer();
             if (factory.donneesBudget !== false) {
@@ -29,6 +30,17 @@ gestionBudget.factory('donneesBudgetService', function ($http, $q) {
                     deferred.reject('impossible de recuperer les donnees')
                 }));
             return deferred.promise ;
+        },
+        postDonnesAnalyse : function (formData) {
+            var deferred = $q.defer();
+            $http.post(Routing.generate('postdonnees_analyse'), formData)
+                .then(function (data) {
+                     factory.donneesanalyse = data;
+                     deferred.resolve(factory.donneesanalyse);
+                }, function (data) {
+                    deferred.reject('impossible de recupérer les données !!!')
+                })
+            return deferred.promise;
         }
     };
     return factory;

@@ -1,9 +1,9 @@
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 gestion_budget_axe:
     resource: "@GestionBudgetBundle/Controller/AxeController.php"
     type:     annotation
 
-fos_js_routing:
-    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 gestion_budget:
     resource: "@GestionBudgetBundle/Controller/"
     type:     annotation

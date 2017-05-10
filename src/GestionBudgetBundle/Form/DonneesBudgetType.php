@@ -28,6 +28,9 @@ class DonneesBudgetType extends AbstractType
             ->add('commune', EntityType::class, array(
                 'class' => 'GestionBudgetBundle\Entity\Commune',
                 'choice_label' => 'nomCommune',
+                'required' => false,
+                'empty_data' =>null,
+                'preferred_choices' => array(),
                 'attr' => array('class' => 'form-control')
             ))
             ->add('compte', EntityType::class, array(
