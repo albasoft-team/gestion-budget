@@ -10,7 +10,6 @@ gestionBudget.controller('analyseDonnees',['$scope','donneesBudgetService', func
         if (form.axe && form.composant && form.portee) {
             donneesBudgetService.postDonnesAnalyse(form)
                 .then(function (donneesanalyse) {
-                    console.log(JSON.parse(donneesanalyse.data));
                     $scope.donnees = JSON.parse(donneesanalyse.data) ;
                     renderCarte($scope.donnees);
                 }, function (msg) {
