@@ -39,12 +39,30 @@ class DonneesBudgetRepository extends \Doctrine\ORM\EntityRepository
         $rq = $this->createQueryBuilder('db')
             ->join('db.departement','d')
             ->join('d.region','region')
-            ->select('SUM(db.budgetVote),region.codeRegion')
+            ->select('SUM(db.budgetVote),region.codeRegion,region.nomRegion,region.id')
             ->groupBy('region.id')
             ->join('db.compte','cp')
             ->where('cp.numeroCompte='.$compsant)
             ->getQuery();
 
         return $rq->getScalarResult();
+    }
+
+    /**
+     * @param $composant
+     * @param $departId
+     * @return mixed
+     */
+
+    public function getAxeValueByDepartement($axe,$departId) {
+
+        $rq = $this->createQueryBuilder('db')
+            ->select('db.budgetVote')
+            ->join('db.departement','d')
+            ->where('d.id='.$departId)
+            ->andWhere('db.commune is NULL')
+            ->getQuery();
+
+        return $rq->getOneOrNullResult();
     }
 }

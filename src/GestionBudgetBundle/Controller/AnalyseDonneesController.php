@@ -14,6 +14,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * Class AnalyseDonneesController
@@ -51,8 +54,105 @@ class AnalyseDonneesController extends Controller
         $portee = $data['portee'];
         $em = $this->getDoctrine()->getManager();
         $results = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getResultAnalyse($composant, $axe, $portee);
-        $serializer = $this->get('serializer');
-        $arrayResult = $serializer->normalize($results);
+        $datasource = array(
+            'map' => array(
+                "theme" => "ocean",
+                "animation" => "0",
+                "formatNumberScale" => "0",
+                "showCanvasBorder" => "0",
+                "showshadow" => "0",
+                "fillColor" => "#04A3ED",
+                "caption" => "Le budget voté par région",
+                "entityFillHoverColor" => "#E5E5E9"
+            ),
+            'colorrange' => array(
+                'color' => array(
+                    array(
+                        "minvalue"  => 0,
+                        "maxvalue" => 15000000,
+                        "code" => "#f8bd19",
+                        "displayvalue" => "< 20M"
+                    ),
+                     array(
+                         "minvalue" => "20000000",
+                         "maxvalue" => 22000000,
+                         "code" => "#6baa01",
+                         "displayvalue" => "20-50M"
+                    ),
+                     array(
+                         "minvalue" => "50000000",
+                        "maxvalue" => 86000000,
+                        "code" => "#eed698",
+                        "displayvalue" => "50-100M"
+                    ),
+                     array(
+                         "minvalue" => "100000000",
+                        "maxvalue" => 105000000,
+                        "code" => "#fa0808",
+                        "displayvalue" => "100-200M"
+                    )
+                )
+            )
+        );
+        $datasource['data'] = array();
+        if ($results) {
+            foreach ($results as $result) {
+                array_push($datasource['data'], array(
+                    'id' => $result['codeRegion'],
+                    'value' => $result[1],
+                    'link' => 'newchart-json-'.$result['nomRegion']
+                ));
+            }
+        }
+        $datasource['linkeddata'] = array();
+//        $departs = new  \Doctrine\Common\Collections\ArrayCollection();
+        foreach ($results as $result) {
+            $region = $em->getRepository('GestionBudgetBundle:Region')->find($result['id']);
+
+            $departs  =  $region->getDepartements();
+            $libelle = array();
+            $valuesBV = array();
+            foreach ($departs as $depart) {
+                array_push($libelle, array(
+                    'label' => $depart->getNomDepartement()
+                ));
+                $values = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getAxeValueByDepartement($axe, $depart->getId());
+                array_push($valuesBV, array(
+                   'value' => $values['budgetVote']
+                ));
+            }
+            array_push($datasource['linkeddata'], array(
+                    'id' => $result['nomRegion'],
+                    'linkedchart' => array(
+                        'chart' => array(
+                            "showvalues" => "0",
+                            "formatNumberScale" => "0",
+                            "theme" => "fint"
+                        ),
+                        'categories' => array(
+                            'category' => $libelle
+                        ),
+                        'dataset' => array(
+                            'seriesname' => 'vue sur '.$axe,
+                            'data' => $valuesBV
+                        )
+                    )
+
+            ));
+        }
+
+        $normalizer = new ObjectNormalizer();
+
+        $normalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+        $encoder = new JsonEncode();
+
+        $serializer = new  Serializer(array($normalizer), array($encoder));
+        $arrayResult = $serializer->serialize($datasource,'json');
+
+//        $serializer = $this->get('serializer');
+//        $arrayResult = $serializer->normalize($datasource);
 
         return new JsonResponse($arrayResult);
     }

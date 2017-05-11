@@ -10,4 +10,13 @@ namespace GestionBudgetBundle\Repository;
  */
 class RegionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getDepartementsByCode($code) {
+
+        $query = $this->createQueryBuilder('r')
+            ->select('r.departements')
+            ->where('r.id='.$code)
+            ->getQuery();
+        $donnees = $query->getResult();
+        return $donnees;
+    }
 }

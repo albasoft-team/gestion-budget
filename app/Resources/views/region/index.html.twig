@@ -23,6 +23,7 @@
                             <th class="hidden-xs">ID</th>
                             <th>Nom region</th>
                             <th>Code région</th>
+                            <th>Département</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -36,6 +37,15 @@
                                 <td class="hidden-xs"><a href="{{ path('region_show', { 'id': region.id }) }}">{{ region.id }}</a></td>
                                 <td>{{ region.nomRegion }}</td>
                                 <td>{{ region.codeRegion }}</td>
+                                <td>
+                                    <select class="form-control">
+                                        {% if region.departements %}
+                                            {% for depart in region.departements %}
+                                                <option>{{ depart.nomDepartement }}</option>
+                                             {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

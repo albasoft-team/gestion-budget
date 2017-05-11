@@ -5,6 +5,9 @@
         <div id="panelMap" class="panel panel-primary">
             <div class="panel-heading">Sénégal</div>
             <div class="panel-body">
+                <div ng-if="msg.length > 0" style="margin: 20px;">
+                    <span class="alert alert-danger" ng-repeat="mes in msg">[[mes]]</span>
+                </div>
                 <form id="formAnalyse" class="form-inline" name="myForm">
                     <div class="form-group">
                         <label for="numcompte">Composant à analyser:</label>
