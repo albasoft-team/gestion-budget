@@ -35,6 +35,7 @@ security:
 
         - { path: ^/donneesbudget, role: ROLE_USER }
         - { path: ^/departement, role: ROLE_USER }
+        - { path: ^/analysedonnees, role: ROLE_ADMIN }
         - { path: ^/region, role: ROLE_USER }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
