@@ -47,6 +47,30 @@ class DonneesBudgetRepository extends \Doctrine\ORM\EntityRepository
 
         return $rq->getScalarResult();
     }
+    public  function getReslutDonnees($composant, $axe,$portee) {
+
+          $query = $this->createQueryBuilder('db')
+                    ->select('db')
+                    ->join('db.compte', 'compte')
+                    ->where('compte.numeroCompte=:composant')
+                    ->setParameter('composant',$composant)
+                    ->getQuery();
+
+          return $query->getResult();
+    }
+    public function getResultAgregaCommunes($composant) {
+        $rq = $this->createQueryBuilder('db')
+            ->join('db.commune','d')
+            ->join('d.departement','departement')
+            ->select('SUM(db.budgetVote),departement.id,departement.nomDepartement')
+            ->groupBy('departement.id')
+            ->join('db.compte','cp')
+            ->where('cp.numeroCompte='.$composant)
+            ->getQuery();
+
+        return $rq->getScalarResult();
+    }
+
 
     /**
      * @param $composant

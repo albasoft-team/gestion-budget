@@ -9,6 +9,8 @@
 namespace GestionBudgetBundle\Controller;
 
 
+use GestionBudgetBundle\Constantes\Constante;
+use GestionBudgetBundle\Entity\Noeud;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -53,6 +55,9 @@ class AnalyseDonneesController extends Controller
         $axe = $data['axe'];
         $portee = $data['portee'];
         $em = $this->getDoctrine()->getManager();
+        $rslt = $em->getRepository('GestionBudgetBundle:DonneesBudget')->findAll();
+        var_dump($rslt);
+        die();
         $results = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getResultAnalyse($composant, $axe, $portee);
         $datasource = array(
             'map' => array(
@@ -106,6 +111,7 @@ class AnalyseDonneesController extends Controller
         }
         $datasource['linkeddata'] = array();
 //        $departs = new  \Doctrine\Common\Collections\ArrayCollection();
+        $const = new Constante();
         foreach ($results as $result) {
             $region = $em->getRepository('GestionBudgetBundle:Region')->find($result['id']);
 
@@ -116,10 +122,22 @@ class AnalyseDonneesController extends Controller
                 array_push($libelle, array(
                     'label' => $depart->getNomDepartement()
                 ));
-                $values = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getAxeValueByDepartement($axe, $depart->getId());
-                array_push($valuesBV, array(
-                   'value' => $values['budgetVote']
-                ));
+                if ($portee == $const::DEPARTEMENT) {
+                    $values = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getAxeValueByDepartement($axe, $depart->getId());
+                    array_push($valuesBV, array(
+                        'value' => $values['budgetVote']
+                    ));
+                }
+
+//                if ($portee == $const::COMMUNE) {
+//                    $values = $em->getRepository('GestionBudgetBundle:DonneesBudget')
+//                                    ->getResultAgregaCommunes($composant) ;
+////                    array_push($valuesBV, array(
+////                        'value' => $values[1],
+////                        'link' => 'newchart-json-'.$values['nomCommune']
+////                    ));
+//                    var_dump($values);
+//                }
             }
             array_push($datasource['linkeddata'], array(
                     'id' => $result['nomRegion'],
@@ -140,7 +158,6 @@ class AnalyseDonneesController extends Controller
 
             ));
         }
-
         $normalizer = new ObjectNormalizer();
 
         $normalizer->setCircularReferenceHandler(function ($object) {
@@ -156,4 +173,43 @@ class AnalyseDonneesController extends Controller
 
         return new JsonResponse($arrayResult);
     }
+
+    /**
+     * @param Request $request
+     * @Route("/postdata", name="postdata_analyse", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function constructionListe(Request $request) {
+        $data = json_decode($request->getContent(), TRUE);
+        $composant = $data['composant'];
+        $axe = $data['axe'];
+        $portee = $data['portee'];
+        $liste = array();
+        $em = $this->getDoctrine()->getManager();
+        $result = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getReslutDonnees($composant,$axe,$portee);
+
+
+
+        //Sérialisation des objets
+        $normalizer = new ObjectNormalizer();
+
+        $normalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+        $encoder = new JsonEncode();
+
+        $serializer = new  Serializer(array($normalizer), array($encoder));
+        $arrayResult = $serializer->serialize($result,'json');
+
+        return new JsonResponse($arrayResult);
+    }
+
+    public function construireNoeud($nom, $parent, $valeurAxe) {
+        $noeud = new Noeud();
+        $noeud->setNom($nom);
+        $noeud->setParent($parent);
+        $noeud->setValeurCompAxe($valeurAxe);
+        return $noeud;
+    }
+
 }
