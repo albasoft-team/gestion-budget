@@ -63,7 +63,7 @@ class DonneesBudget
     private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity="GestionBudgetBundle\Entity\Compte")
+     * @ORM\ManyToOne(targetEntity="GestionBudgetBundle\Entity\Compte")
      * @ORM\JoinColumn(name="compte_id", referencedColumnName="id")
      *
      *
