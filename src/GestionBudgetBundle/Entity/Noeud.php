@@ -9,12 +9,15 @@
 namespace GestionBudgetBundle\Entity;
 
 
+use GestionBudgetBundle\GestionBudgetBundle;
+
 class Noeud
 {
     private $id;
     private $nom;
     private $parent;
     private $valeurCompAxe;
+    private $niveau;
 
    public function getId() {
        return $this->id;
@@ -31,8 +34,9 @@ class Noeud
    public function getParent() {
        return $this->parent;
     }
-   public function setParent($parent) {
+   public function setParent(\GestionBudgetBundle\Entity\Noeud $parent = null) {
        $this->parent = $parent;
+       return $this;
    }
 
    public function getValeurCompAxe() {
@@ -40,5 +44,12 @@ class Noeud
     }
    public function setValeurCompAxe($valeurcompaxe) {
        $this->valeurCompAxe = $valeurcompaxe;
+   }
+
+   public function setNiveau($niveau = 3) {
+       $this->niveau = $niveau;
+   }
+   public  function getNiveau() {
+       return $this->niveau;
    }
 }

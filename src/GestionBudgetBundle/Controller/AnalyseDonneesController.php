@@ -44,136 +44,183 @@ class AnalyseDonneesController extends Controller
         ));
     }
 
-    /**
-     * @param Request $request
-     * @Route("/postdonneesanalyse", options={"expose"=true}, name="postdonnees_analyse")
-     * @Method("POST")
-     */
-    public function postDonnesAnalyse(Request $request) {
-        $data = json_decode($request->getContent(), TRUE);
-        $composant = $data['composant'];
-        $axe = $data['axe'];
-        $portee = $data['portee'];
-        $em = $this->getDoctrine()->getManager();
-        $rslt = $em->getRepository('GestionBudgetBundle:DonneesBudget')->findAll();
-        var_dump($rslt);
-        die();
-        $results = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getResultAnalyse($composant, $axe, $portee);
+    public function postDonnesAnalyse(Request $request,$listeComplete = array(), $portee, $axe) {
+        $results = $listeComplete;
         $datasource = array(
-            'map' => array(
-                "theme" => "ocean",
-                "animation" => "0",
-                "formatNumberScale" => "0",
-                "showCanvasBorder" => "0",
-                "showshadow" => "0",
-                "fillColor" => "#04A3ED",
-                "caption" => "Le budget voté par région",
-                "entityFillHoverColor" => "#E5E5E9"
-            ),
+            'chart' => Constante::CHARTCARTE,
             'colorrange' => array(
-                'color' => array(
-                    array(
-                        "minvalue"  => 0,
-                        "maxvalue" => 15000000,
-                        "code" => "#f8bd19",
-                        "displayvalue" => "< 20M"
-                    ),
-                     array(
-                         "minvalue" => "20000000",
-                         "maxvalue" => 22000000,
-                         "code" => "#6baa01",
-                         "displayvalue" => "20-50M"
-                    ),
-                     array(
-                         "minvalue" => "50000000",
-                        "maxvalue" => 86000000,
-                        "code" => "#eed698",
-                        "displayvalue" => "50-100M"
-                    ),
-                     array(
-                         "minvalue" => "100000000",
-                        "maxvalue" => 105000000,
-                        "code" => "#fa0808",
-                        "displayvalue" => "100-200M"
-                    )
-                )
+                'color' => Constante::COLOR
             )
         );
         $datasource['data'] = array();
+        $datasource['linkeddata'] = array();
         if ($results) {
             foreach ($results as $result) {
-                array_push($datasource['data'], array(
-                    'id' => $result['codeRegion'],
-                    'value' => $result[1],
-                    'link' => 'newchart-json-'.$result['nomRegion']
-                ));
-            }
-        }
-        $datasource['linkeddata'] = array();
-//        $departs = new  \Doctrine\Common\Collections\ArrayCollection();
-        $const = new Constante();
-        foreach ($results as $result) {
-            $region = $em->getRepository('GestionBudgetBundle:Region')->find($result['id']);
-
-            $departs  =  $region->getDepartements();
-            $libelle = array();
-            $valuesBV = array();
-            foreach ($departs as $depart) {
-                array_push($libelle, array(
-                    'label' => $depart->getNomDepartement()
-                ));
-                if ($portee == $const::DEPARTEMENT) {
-                    $values = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getAxeValueByDepartement($axe, $depart->getId());
-                    array_push($valuesBV, array(
-                        'value' => $values['budgetVote']
+                if ($result->getNiveau() == 1) {
+                    array_push($datasource['data'], array(
+                        'id' => $result->getNom(),
+                        'value' => $result->getValeurCompAxe(),
+                        'link' => 'newchart-json-'.$result->getNom()
                     ));
+                    $libelle = array();
+                    $valuesBV = array(); $arraLink = array();
+                    foreach ($results as $dep) {
+                        $departValues = array(); $categoryVal = array();
+                        if ($dep->getNiveau() == 2) {
+                            if ($dep->getParent()->getNom() == $result->getNom())
+                            {
+                                if ($portee == Constante::COMMUNE) {
+                                    array_push($libelle, array(
+                                        'label' => $dep->getNom(),
+                                        'link'  => 'newchart-json-'.$dep->getNom(),
+                                        'value' => $dep->getValeurCompAxe()
+                                    ));
+                                }
+                                 if ($portee == Constante::DEPARTEMENT) {
+                                    array_push($libelle, array(
+                                        'label' => $dep->getNom(),
+                                        'value' => $dep->getValeurCompAxe()
+                                    ));
+                                }
+                                foreach ($results as $com) {
+                                    if ($com->getNiveau() == 3 && $com->getParent()->getNom() == $dep->getNom()) {
+                                        array_push($departValues, array(
+                                            'label' => $com->getNom(),
+                                            'value' => $com->getValeurCompAxe()
+                                        ));
+                                    }
+                                }
+
+                                array_push($arraLink, array(
+                                    'id' => $dep->getNom(),
+                                    "linkedchart" => array(
+                                        "chart" => Constante::ChartParameters($axe, $portee),
+                                        'data' => $departValues,
+                                    )
+
+                                ));
+                            }
+
+                        }
+
+                    }
+                    array_push($datasource['linkeddata'], array(
+                        'id' => $result->getNom(),
+                        'linkedchart' => array(
+                            'chart' => Constante::ChartParameters($axe, "Départements"),
+                            'data' => $libelle,
+                            'linkeddata' =>  $arraLink
+                        )));
                 }
 
-//                if ($portee == $const::COMMUNE) {
-//                    $values = $em->getRepository('GestionBudgetBundle:DonneesBudget')
-//                                    ->getResultAgregaCommunes($composant) ;
-////                    array_push($valuesBV, array(
-////                        'value' => $values[1],
-////                        'link' => 'newchart-json-'.$values['nomCommune']
-////                    ));
-//                    var_dump($values);
-//                }
             }
-            array_push($datasource['linkeddata'], array(
-                    'id' => $result['nomRegion'],
-                    'linkedchart' => array(
-                        'chart' => array(
-                            "showvalues" => "0",
-                            "formatNumberScale" => "0",
-                            "theme" => "fint"
-                        ),
-                        'categories' => array(
-                            'category' => $libelle
-                        ),
-                        'dataset' => array(
-                            'seriesname' => 'vue sur '.$axe,
-                            'data' => $valuesBV
-                        )
-                    )
-
-            ));
         }
-        $normalizer = new ObjectNormalizer();
-
-        $normalizer->setCircularReferenceHandler(function ($object) {
-            return $object->getId();
-        });
-        $encoder = new JsonEncode();
-
-        $serializer = new  Serializer(array($normalizer), array($encoder));
-        $arrayResult = $serializer->serialize($datasource,'json');
-
-//        $serializer = $this->get('serializer');
-//        $arrayResult = $serializer->normalize($datasource);
-
-        return new JsonResponse($arrayResult);
+        return $datasource;
     }
 
+    private function constructListByPortee ($results, $portee) {
+        $liste =array();
+        if ($portee == Constante::COMMUNE) {
+            foreach ($results as $reslt) {
+                $noeudR = $this->construireNoeud($reslt->getDepartement()->getRegion()->getId(),$reslt->getDepartement()->getRegion()->getCodeRegion(),0,null,0);
+                $noeudD = $this->construireNoeud($reslt->getDepartement()->getId(),$reslt->getDepartement()->getNomDepartement(),0,$noeudR, 0 );
+                $noeudC = $this->construireNoeud($reslt->getCommune()->getId(),$reslt->getCommune()->getNomCommune(),3,
+                        $noeudD , $reslt->getBudgetVote());
+                array_push($liste,$noeudC);
+            }
+        }
+        if ($portee == Constante::DEPARTEMENT) {
+            foreach ($results as $reslt) {
+                $noeudR = $this->construireNoeud($reslt->getDepartement()->getRegion()->getId(),$reslt->getDepartement()->getRegion()->getCodeRegion(),0,null,0);
+                $noeudD = $this->construireNoeud($reslt->getDepartement()->getId(),$reslt->getDepartement()->getNomDepartement(),2,$noeudR, $reslt->getBudgetVote() );
+                array_push($liste,$noeudD);
+            }
+        }
+        return $liste;
+
+    }
+
+//    public function constructListByNiveauc($listDepart,$niveau) {
+//        $departs = array();
+//        $i = 0;
+//        foreach ($listDepart as $listD) {
+//            $noeudD = $listD->getParent();
+//            if ($i == 0) {
+//                $noeud = new Noeud();
+//                if ($noeudD && $noeudD->getParent()) {
+//                    $noeudR = $this->construireNoeud($noeudD->getParent()->getId(), $noeudD->getParent()->getNom(), 0, null,$noeudD->getParent()->getValeurCompAxe());
+//                    $noeud = $this->construireNoeud($noeudD->getId(),$noeudD->getNom(), $niveau, $noeudR,0 );
+//                }
+//                array_push($departs,$noeud);
+//            }
+//            $contient = false;
+//
+//
+//            if (count($departs) > 0) {
+//                foreach ($departs as $dep) {
+//                    if ($noeudD) {
+//                        if ($dep->getId() == $noeudD->getId()) {
+//                            $contient = true;
+//                            $dep->setValeurCompAxe($dep->getValeurCompAxe() + $listD->getValeurCompAxe());
+//                        }
+//                    }
+//                }
+//                if ($contient == false)  {
+//                    $noeud = new Noeud();
+//                    if ($noeudD && $noeudD->getParent()) {
+//                        $noeudR = $this->construireNoeud($noeudD->getParent()->getId(), $noeudD->getParent()->getNom(), 0, null, $noeudD->getParent()->getValeurCompAxe());
+//                        $noeud = $this->construireNoeud($noeudD->getId(), $noeudD->getNom(),$niveau, $noeudR,$listD->getValeurCompAxe());
+//                    }
+//                    array_push($departs,$noeud);
+//                }
+//            }
+//            $i++;
+//        }
+//        return $departs;
+//    }
+    private function constructListByNiveau($departs, $niveau) {
+        $listRegion = array();
+        $i = 0 ;
+        foreach ($departs as $listD) {
+            $noeudD = $listD->getParent();
+            if ($i == 0) {
+                $noeud = new Noeud();
+                if ($noeudD) {
+                    if ($noeudD->getParent()) {
+                        $noeudR = $this->construireNoeud($noeudD->getParent()->getId(),$noeudD->getParent()->getNom(),0, null, $noeudD->getParent()->getValeurCompAxe() );
+                        $noeud = $this->construireNoeud($noeudD->getId(), $noeudD->getNom(), $niveau, $noeudR, 0);
+                    }
+                }
+                array_push($listRegion,$noeud);
+
+            }
+            $contient = false;
+            if (count($listRegion) > 0) {
+                foreach ($listRegion as $dep) {
+                    if ($noeudD) {
+                        if ($dep->getId() == $noeudD->getId()) {
+                            $contient = true;
+                            $dep->setValeurCompAxe($dep->getValeurCompAxe() + $listD->getValeurCompAxe());
+                        }
+                    }
+
+                }
+                if ($contient == false)  {
+                    $noeud = new Noeud();
+                    if ($noeudD) {
+                        $noeudR = new Noeud();
+                        if ($noeudD->getParent()) {
+                            $noeudR = $this->construireNoeud($noeudD->getParent()->getId(),$noeudD->getParent()->getNom(),0, null, $noeudD->getParent()->getValeurCompAxe() );
+                        }
+                        $noeud = $this->construireNoeud($noeudD->getId(),$noeudD->getNom(),$niveau, $noeudR, $listD->getValeurCompAxe());
+                    }
+                    array_push($listRegion,$noeud);
+                }
+            }
+            $i++;
+        }
+        return $listRegion;
+    }
     /**
      * @param Request $request
      * @Route("/postdata", name="postdata_analyse", options={"expose"=true})
@@ -184,13 +231,31 @@ class AnalyseDonneesController extends Controller
         $composant = $data['composant'];
         $axe = $data['axe'];
         $portee = $data['portee'];
-        $liste = array();
         $em = $this->getDoctrine()->getManager();
-        $result = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getReslutDonnees($composant,$axe,$portee);
+         $listDepart = array();  $listRegion = array(); $departs = array();
+        if ($portee == Constante::COMMUNE) {
+            $result = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getReslutDonneesAxeCommune($composant,$axe,$portee);
+            //Zone de construction des communes
+            $listDepart = $this->constructListByPortee($result,$portee);
+            //Zone de construction des noeuds des departements
+            $departs = $this->constructListByNiveau($listDepart,2);
 
+            // Zone de construction des Regions
+            $listRegion = $this->constructListByNiveau($departs,1);
 
+        }
+        if ($portee == Constante::DEPARTEMENT) {
+            $result = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getReslutDonneesAxeDepartement($composant,$axe,$portee);
+            //Zone de construction des communes
+            $listDepart = $this->constructListByPortee($result,$portee);
+            // Zone de construction des Regions
+            $listRegion = $this->constructListByNiveau($listDepart,1);
+       }
 
-        //Sérialisation des objets
+        $listComDepart = array_merge($listDepart,$departs);
+        $listComplete = array_merge($listComDepart, $listRegion);
+         $dataSource = $this->postDonnesAnalyse($request,$listComplete,$portee, $axe);
+//        Sérialisation des objets
         $normalizer = new ObjectNormalizer();
 
         $normalizer->setCircularReferenceHandler(function ($object) {
@@ -199,14 +264,26 @@ class AnalyseDonneesController extends Controller
         $encoder = new JsonEncode();
 
         $serializer = new  Serializer(array($normalizer), array($encoder));
-        $arrayResult = $serializer->serialize($result,'json');
+        $arrayResult = $serializer->serialize($dataSource,'json');
+//        $arrayResult = $serializer->serialize($listComplete,'json');
 
         return new JsonResponse($arrayResult);
     }
 
-    public function construireNoeud($nom, $parent, $valeurAxe) {
+    /**
+     * Construction  de noeud [commune,departement,region]
+     * @param $id
+     * @param $nom
+     * @param $niveau
+     * @param $parent
+     * @param $valeurAxe
+     * @return Noeud
+     */
+    public function construireNoeud($id, $nom,$niveau, $parent, $valeurAxe) {
         $noeud = new Noeud();
+        $noeud->setId($id);
         $noeud->setNom($nom);
+        $noeud->setNiveau($niveau);
         $noeud->setParent($parent);
         $noeud->setValeurCompAxe($valeurAxe);
         return $noeud;

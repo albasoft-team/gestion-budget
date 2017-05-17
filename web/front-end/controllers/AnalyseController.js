@@ -16,10 +16,15 @@ gestionBudget.controller('analyseDonnees',['$scope','donneesBudgetService', func
             //     }, function (msg) {
             //         alert(msg);
             //     })
-            
+
+            // console.log(form);
             donneesBudgetService.postData(form)
                 .then(function (response) {
-                    console.log(JSON.parse(response));
+                    // console.log(JSON.parse(response));
+                    $scope.donnees = response;
+                    renderCarte($scope.donnees);
+                }, function (msg) {
+
                 })
         }
         else {
@@ -39,7 +44,7 @@ gestionBudget.controller('analyseDonnees',['$scope','donneesBudgetService', func
             });
             populationMap.configureLink(
                 {
-                type: "mscombidy2d",
+                type: "column2D",
                 overlayButton: {
                     message: 'Retour',
                     fontSize : '12',

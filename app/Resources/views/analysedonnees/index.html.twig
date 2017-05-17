@@ -23,7 +23,7 @@
                         <select type="text" ng-model="formData.axe" class="form-control" id="axe" required>
                             <option></option>
                             {% for axe in axes  %}
-                                <option value="{{ axe.designation }}">{{ axe.designation }}</option>
+                                <option value="{{ axe.code }}">{{ axe.designation }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -31,8 +31,8 @@
                         <label for="axe">Choisir une portée :</label>
                         <select type="text" ng-model="formData.portee" class="form-control" id="axe" required>
                             <option></option>
-                            <option>Département</option>
-                            <option>Commune</option>
+                            <option value="departement">Département</option>
+                            <option value="commune">Commune</option>
                         </select>
                     </div>
                     <div class="form-group">

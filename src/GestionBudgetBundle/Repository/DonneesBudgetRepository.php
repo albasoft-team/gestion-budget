@@ -47,16 +47,51 @@ class DonneesBudgetRepository extends \Doctrine\ORM\EntityRepository
 
         return $rq->getScalarResult();
     }
-    public  function getReslutDonnees($composant, $axe,$portee) {
+
+    /**
+     * Les donnees niveau commune
+     * @param $composant
+     * @param $axe
+     * @param $portee
+     * @return array
+     */
+    public  function getReslutDonneesAxeCommune($composant, $axe,$portee) {
 
           $query = $this->createQueryBuilder('db')
                     ->select('db')
                     ->join('db.compte', 'compte')
                     ->where('compte.numeroCompte=:composant')
+                    ->andWhere('db.commune is NOT NULL')
                     ->setParameter('composant',$composant)
                     ->getQuery();
 
           return $query->getResult();
+    }
+//     public  function getQuery($composant, $axe,$portee) {
+//          $query = $this->createQueryBuilder()
+//                    ->select("db.$axe")
+//                    ->from('donnees_budget', 'db')
+//                    ->join('db.compte', 'compte')
+//                    ->where('compte.numeroCompte=:composant')
+//                    ->andWhere('db.commune is NOT NULL')
+//                    ->setParameter('composant',$composant)
+//                    ->getQuery();
+//
+//          return $query->getResult();
+//    }
+
+
+    public  function getReslutDonneesAxeDepartement($composant, $axe,$portee) {
+
+        $query = $this->createQueryBuilder('db')
+            ->select('db')
+            ->join('db.compte', 'compte')
+            ->where('compte.numeroCompte=:composant')
+            ->andWhere('db.commune is NULL')
+            ->setParameter('composant',$composant)
+            ->getQuery();
+
+        return $query->getResult();
     }
     public function getResultAgregaCommunes($composant) {
         $rq = $this->createQueryBuilder('db')
