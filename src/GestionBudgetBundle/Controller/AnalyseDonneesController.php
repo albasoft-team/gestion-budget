@@ -46,6 +46,7 @@ class AnalyseDonneesController extends Controller
 
     public function postDonnesAnalyse(Request $request,$listeComplete = array(), $portee, $axe) {
         $results = $listeComplete;
+        $em = $this->getDoctrine()->getManager();
         $datasource = array(
             'chart' => Constante::CHARTCARTE,
             'colorrange' => array(
@@ -90,11 +91,10 @@ class AnalyseDonneesController extends Controller
                                         ));
                                     }
                                 }
-
                                 array_push($arraLink, array(
                                     'id' => $dep->getNom(),
                                     "linkedchart" => array(
-                                        "chart" => Constante::ChartParameters($axe, $portee),
+                                        "chart" => Constante::ChartParameters($axe, 'le département de '.$dep->getNom() ),
                                         'data' => $departValues,
                                     )
 
@@ -104,10 +104,11 @@ class AnalyseDonneesController extends Controller
                         }
 
                     }
+                    $nomReg = $em->getRepository('GestionBudgetBundle:Region')->getNomRegionByCode($result->getNom());
                     array_push($datasource['linkeddata'], array(
                         'id' => $result->getNom(),
                         'linkedchart' => array(
-                            'chart' => Constante::ChartParameters($axe, "Départements"),
+                            'chart' => Constante::ChartParameters($axe,'la région de '.$nomReg['nomRegion']),
                             'data' => $libelle,
                             'linkeddata' =>  $arraLink
                         )));

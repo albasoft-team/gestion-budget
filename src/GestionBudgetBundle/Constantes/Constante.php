@@ -42,22 +42,26 @@ class Constante
         "theme" => "fint",
         "formatNumberScale" => "0",
         "showLabels" => "1",
-        "hoverOnNull" => "0"
+        "hoverOnNull" => "0",
+        "rotateValues" => "1",
+        "exportEnabled" => "1"
     );
 
     public static function ChartParameters($axe, $portee) {
 
         $chart = array(
-            "caption" => "La répartition $axe  par $portee",
+            "caption" => "La répartition des $axe  sur  $portee",
             "yaxisname" => "Valeur du budget",
             "showvalues" => "0",
             "bgcolor" => "FFFFFF",
-            "xaxisname" => "Les $portee",
+            "xaxisname" => "$portee",
             "plotgradientcolor" => "",
             "showalternatehgridcolor" => "0",
             "showplotborder" => "0",
             "divlinecolor" => "CCCCCC",
-            "canvasborderalpha" => "0"
+            "canvasborderalpha" => "0",
+            "rotateValues" => "1",
+            "exportEnabled" => "1"
         );
 
         return $chart;

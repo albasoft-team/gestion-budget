@@ -19,4 +19,13 @@ class RegionRepository extends \Doctrine\ORM\EntityRepository
         $donnees = $query->getResult();
         return $donnees;
     }
+    public function getNomRegionByCode($code) {
+        $query = $this->createQueryBuilder('region')
+                ->select('region.nomRegion')
+                ->where('region.codeRegion=:code')
+                ->setParameter('code',$code)
+                ->getQuery();
+
+        return $query->getSingleResult();
+    }
 }
