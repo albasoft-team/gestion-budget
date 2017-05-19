@@ -108,7 +108,7 @@ class AnalyseDonneesController extends Controller
                     array_push($datasource['linkeddata'], array(
                         'id' => $result->getNom(),
                         'linkedchart' => array(
-                            'chart' => Constante::ChartParameters($axe,'Le départements de la région de '.$nomReg['nomRegion']),
+                            'chart' => Constante::ChartParameters($axe,'Les départements de la région de '.$nomReg['nomRegion']),
                             'data' => $libelle,
                             'linkeddata' =>  $arraLink
                         )));
