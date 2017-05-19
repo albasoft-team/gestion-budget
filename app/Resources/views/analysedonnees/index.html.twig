@@ -2,7 +2,7 @@
 
 {% block body %}
     <div ng-controller="analyseDonnees">
-        <div id="panelMap" class="panel panel-primary">
+        <div id="panelMap" class="panel panel-primary panelChart">
             <div class="panel-heading">Sénégal</div>
             <div class="panel-body">
                 <div ng-if="msg.length > 0" style="margin: 20px;">
@@ -41,12 +41,16 @@
                 </form>
                 <div style="width: 600px; display: block;margin-left: auto; margin-right: auto" id="chart-container"></div>
                 {#<div id="chart-container"></div>#}
-                <div id="chartRender">
 
-                </div>
             </div>
         </div>
         {#<div id="chartContainer">A world map will load here!</div>#}
-    </div>
 
+        <div id="chartRender">
+        </div>
+
+</div>
+
+{% endblock %}
+{% block javascripts %}
 {% endblock %}

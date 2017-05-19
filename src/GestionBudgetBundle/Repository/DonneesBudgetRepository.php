@@ -68,9 +68,12 @@ class DonneesBudgetRepository extends \Doctrine\ORM\EntityRepository
           return $query->getResult();
     }
 //     public  function getQuery($composant, $axe,$portee) {
-//          $query = $this->createQueryBuilder()
-//                    ->select("db.$axe")
-//                    ->from('donnees_budget', 'db')
+//         $fields = array('db.'.$axe, 'c.id', 'd.id');
+//          $query = $this->getEntityManager()->createQueryBuilder();
+//         $query->select($fields)
+//                    ->from('GestionBudgetBundle:DonneesBudget' , 'db')
+//                    ->leftJoin('db.commune' , 'c')
+//                    ->leftJoin('db.departement' , 'd')
 //                    ->join('db.compte', 'compte')
 //                    ->where('compte.numeroCompte=:composant')
 //                    ->andWhere('db.commune is NOT NULL')

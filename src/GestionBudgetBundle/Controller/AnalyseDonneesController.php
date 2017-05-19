@@ -119,21 +119,49 @@ class AnalyseDonneesController extends Controller
         return $datasource;
     }
 
-    private function constructListByPortee ($results, $portee) {
+    private function constructListByPortee ($results, $portee, $axe) {
         $liste =array();
         if ($portee == Constante::COMMUNE) {
+            $valeurAxe = 0;
             foreach ($results as $reslt) {
+                switch ($axe) {
+                    case 'budgetVote' :
+                            $valeurAxe = $reslt->getBudgetVote();
+                            break;
+                    case 'budgetrecouvre' :
+                            $valeurAxe = $reslt->getBudgetrecouvre();
+                            break;
+                    case 'budgetDemande' :
+                            $valeurAxe = $reslt->getBudgetDemande();
+                            break;
+
+                    default : $valeurAxe = $reslt->getBudgetVote(); break;
+                }
                 $noeudR = $this->construireNoeud($reslt->getDepartement()->getRegion()->getId(),$reslt->getDepartement()->getRegion()->getCodeRegion(),0,null,0);
                 $noeudD = $this->construireNoeud($reslt->getDepartement()->getId(),$reslt->getDepartement()->getNomDepartement(),0,$noeudR, 0 );
                 $noeudC = $this->construireNoeud($reslt->getCommune()->getId(),$reslt->getCommune()->getNomCommune(),3,
-                        $noeudD , $reslt->getBudgetVote());
+                        $noeudD , $valeurAxe);
                 array_push($liste,$noeudC);
             }
         }
         if ($portee == Constante::DEPARTEMENT) {
+            $valeurAxe = 0;
             foreach ($results as $reslt) {
+                switch ($axe) {
+                    case 'budgetVote' :
+                        $valeurAxe = $reslt->getBudgetVote();
+                        break;
+                    case 'budgetrecouvre' :
+                        $valeurAxe = $reslt->getBudgetrecouvre();
+                        break;
+                    case 'budgetDemande' :
+                        $valeurAxe = $reslt->getBudgetDemande();
+                        break;
+
+                    default : $valeurAxe = $reslt->getBudgetVote(); break;
+                }
                 $noeudR = $this->construireNoeud($reslt->getDepartement()->getRegion()->getId(),$reslt->getDepartement()->getRegion()->getCodeRegion(),0,null,0);
-                $noeudD = $this->construireNoeud($reslt->getDepartement()->getId(),$reslt->getDepartement()->getNomDepartement(),2,$noeudR, $reslt->getBudgetVote() );
+                $noeudD = $this->construireNoeud($reslt->getDepartement()->getId(),$reslt->getDepartement()->getNomDepartement(),2,$noeudR, $valeurAxe );
                 array_push($liste,$noeudD);
             }
         }
@@ -234,10 +262,11 @@ class AnalyseDonneesController extends Controller
         $portee = $data['portee'];
         $em = $this->getDoctrine()->getManager();
          $listDepart = array();  $listRegion = array(); $departs = array();
+
         if ($portee == Constante::COMMUNE) {
             $result = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getReslutDonneesAxeCommune($composant,$axe,$portee);
             //Zone de construction des communes
-            $listDepart = $this->constructListByPortee($result,$portee);
+            $listDepart = $this->constructListByPortee($result,$portee, $axe);
             //Zone de construction des noeuds des departements
             $departs = $this->constructListByNiveau($listDepart,2);
 
@@ -248,7 +277,7 @@ class AnalyseDonneesController extends Controller
         if ($portee == Constante::DEPARTEMENT) {
             $result = $em->getRepository('GestionBudgetBundle:DonneesBudget')->getReslutDonneesAxeDepartement($composant,$axe,$portee);
             //Zone de construction des communes
-            $listDepart = $this->constructListByPortee($result,$portee);
+            $listDepart = $this->constructListByPortee($result,$portee, $axe);
             // Zone de construction des Regions
             $listRegion = $this->constructListByNiveau($listDepart,1);
        }
