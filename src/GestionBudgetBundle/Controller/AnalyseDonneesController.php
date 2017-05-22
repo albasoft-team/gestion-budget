@@ -125,13 +125,13 @@ class AnalyseDonneesController extends Controller
             $valeurAxe = 0;
             foreach ($results as $reslt) {
                 switch ($axe) {
-                    case 'budgetVote' :
+                    case 'BudgetVote' :
                             $valeurAxe = $reslt->getBudgetVote();
                             break;
-                    case 'budgetrecouvre' :
+                    case 'Budgetrecouvre' :
                             $valeurAxe = $reslt->getBudgetrecouvre();
                             break;
-                    case 'budgetDemande' :
+                    case 'BudgetDemande' :
                             $valeurAxe = $reslt->getBudgetDemande();
                             break;
 
@@ -148,13 +148,13 @@ class AnalyseDonneesController extends Controller
             $valeurAxe = 0;
             foreach ($results as $reslt) {
                 switch ($axe) {
-                    case 'budgetVote' :
+                    case 'BudgetVote' :
                         $valeurAxe = $reslt->getBudgetVote();
                         break;
-                    case 'budgetrecouvre' :
+                    case 'Budgetrecouvre' :
                         $valeurAxe = $reslt->getBudgetrecouvre();
                         break;
-                    case 'budgetDemande' :
+                    case 'BudgetDemande' :
                         $valeurAxe = $reslt->getBudgetDemande();
                         break;
 
