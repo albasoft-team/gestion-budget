@@ -48,25 +48,18 @@ class Constante
             "code" => "#c65353",
             "displayvalue" => "150-200M"
         ),
-
         array(
             "minvalue" => "200000000",
             "maxvalue" => 500000000,
             "code" => "#999966",
             "displayvalue" => "200-500M"
         ),
-         array(
+        array(
             "minvalue" => "500000000",
             "maxvalue" => 1000000000,
             "code" => "#00a3cc",
             "displayvalue" => "500-1000M"
         )
-
-
-
-
-
-
     );
     const CHARTCARTE = array(
         "caption" => "La gestion des budgets du Sénagal",
@@ -75,8 +68,7 @@ class Constante
         "showLabels" => "1",
         "hoverOnNull" => "0",
         "rotateValues" => "1",
-        "exportEnabled" => "1",
-        "exportFormats" => "PNG=Exporter en PNG|JPG=Exporter en JPG |PDF=Exporter en PDF|XLS=Exporter en XLS"
+//         portFormats" => "PNG=Exporter en PNG|JPG=Exporter en JPG |PDF=Exporter en PDF|XLS=Exporter en XLS"
     );
 
     public static function ChartParameters($axe, $portee) {
@@ -90,7 +82,6 @@ class Constante
             "plotgradientcolor" => "",
             "showalternatehgridcolor" => "0",
             "showplotborder" => "0",
-            "divlinecolor" => "CCCCCC",
             "canvasborderalpha" => "0",
             "rotateValues" => "1",
             "exportEnabled" => "1",

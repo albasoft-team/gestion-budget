@@ -1,69 +1,24 @@
-Symfony Standard Edition
+Projet Gestion Budget
 ========================
+Ce projet gère les budgets alloués dans toutes les communes du pays.
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony
-application that you can use as the skeleton for your new applications.
-
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
-
-What's inside?
+Recupération du projet?
 --------------
 
-The Symfony Standard Edition is configured with the following defaults:
+Pour recupérer le projet :
+  * git clone **https://github.com/albasoft-team/gestion-budget.git**
+  
+  * Installer composer [**https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx**][1]
 
-  * An AppBundle you can use to start coding;
+  * Se placer sur la racine du projet et et installer les packages symfony en tapant : **composer install** . Réponder les questions (information base de données,...);
 
-  * Twig as the only configured template engine;
+  * Se placer dans le réportoire : web/front-end  et installer les packages angular en tapant : **bower install** et **npm install** 
 
-  * Doctrine ORM/DBAL;
+  * Installer les assets en tapant : **php bin/console assets:install --symlink web**  ;
 
-  * Swiftmailer;
+  * Vider le cache avec : **php bin/console cache:clear**
+  
+  * Exécuter l'application avec : **php bin/console server:run**
 
-  * Annotations enabled for everything.
-
-It comes pre-configured with the following bundles:
-
-  * **FrameworkBundle** - The core Symfony framework bundle
-
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
-
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
-
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
-
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
-
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
-
-  * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
-    integration
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
 
 [1]:  https://symfony.com/doc/3.2/setup.html
-[6]:  https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  https://symfony.com/doc/3.2/doctrine.html
-[8]:  https://symfony.com/doc/3.2/templating.html
-[9]:  https://symfony.com/doc/3.2/security.html
-[10]: https://symfony.com/doc/3.2/email.html
-[11]: https://symfony.com/doc/3.2/logging.html
-[12]: https://symfony.com/doc/3.2/assetic/asset_management.html
-[13]: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
