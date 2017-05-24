@@ -34,22 +34,6 @@ gestionBudget.controller('analyseDonnees',['$scope','donneesBudgetService', func
         if (portee == 'commune'){$scope.profondeur = 2;}
         if (portee == 'departement'){$scope.profondeur = 1;}
         var i = 0;
-        // for (i = 1; i <= $scope.profondeur; i++) {
-
-        // angular.element(document.getElementsByClassName('chartRen')).attr();
-        // $scope.linkedFrame.push({
-        //     type: "column2D",
-        //     "renderAt" : "linkedchart-container"+i,
-        //     overlayButton: {
-        //         show : false
-        //         // message: 'Retour',
-        //         // fontSize : '12',
-        //         // padding : '1',
-        //         // fontColor: '#ffffff',
-        //         // bgColor: '#008ee4'
-        //     }})
-        // }
-
 
         FusionCharts.ready(function () {
             var populationMap = new FusionCharts({
@@ -104,16 +88,6 @@ gestionBudget.controller('analyseDonnees',['$scope','donneesBudgetService', func
                             chatAt.caption = results[0].linkedchart.chart.caption;
 
                             dataSourcePie.chart = chatAt;
-                            dataSourcePie.colorrange = {
-                                color : [
-                                    {"minvalue" : 0,"maxvalue" :20000000, "code" :"f8bd19",  "displayvalue" :"< 20M"},
-                                    {"minvalue" :"20000000","maxvalue" :50000000,"code" :"6baa01","displayvalue" :"20-50M"},
-                                    {"minvalue" :"50000000","maxvalue" :100000000,"code" :"eed698","displayvalue" :"50-100M"},
-                                    {"minvalue" :"100000000","maxvalue" :130000000,"code" :"fa0808","displayvalue" :"100-120M"},
-                                    {"minvalue" :"120000000","maxvalue" :1500000000,"code" :"#b3cccc","displayvalue" :"120-150M"},
-                                    {"minvalue" :"150000000","maxvalue" :200000000,"code" :"#c65353","displayvalue" :"150-200M"},
-                                    {"minvalue" :"200000000","maxvalue" :500000000,"code" :"#999966","displayvalue" :"200-500M"},
-                                    {"minvalue" :"500000000","maxvalue" :1000000000,"code" :"#00a3cc","displayvalue" :"500-1000M"}]};
                             dataSourcePie.data = [];
                             dataSourcePie.data = results[0].linkedchart.data;
                             dataSourcePie.linkeddata = [];
