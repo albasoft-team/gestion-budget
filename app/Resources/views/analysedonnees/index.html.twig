@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div ng-controller="analyseDonnees">
-        <div id="panelMap" class="panel panel-primary panelChart">
+    <div ng-controller="analyseDonnees" class="container">
+        <div id="panelMap" style="padding-left: 0px; padding-right: 0px;" class="panel panel-primary col-lg-12 col-md-12 col-xs-12 col-sm-12">
             <div class="panel-heading">Sénégal</div>
             <div class="panel-body">
                 <div ng-if="msg.length > 0" style="margin: 20px;">
@@ -47,11 +47,13 @@
         </div>
         {#<div id="chartContainer">A world map will load here!</div>#}
 
-        <div id='panel2' class='panel panel-primary' style="display: none">
+        <div id='panel2' class='col-lg-12 col-md-12 col-xs-12 col-sm-12 panel panel-primary' style="display: none">
             <div id="head" class='panel-heading'></div>
             <div class='panel-body'>
-                <div class='chartRen col-lg-6 col-md-12 col-xs-12 col-sm-12' style=" padding: 10px" id= 'linkedchart-container'></div>
-                <div class='chartRen col-lg-6 col-md-12 col-xs-12 col-sm-12' style=" padding: 10px" id= 'linkedchart-container1'></div>
+                <div class="col-lg-12">
+                    <div class='chartRen col-lg-6 col-xs-12 col-sm-12 col-md-12 ' style=" padding: 10px; " id= 'linkedchart-container'></div>
+                    <div class='chartRen col-lg-6 col-xs-12 col-sm-12 col-md-12' style="padding: 10px;" id= 'linkedchart-container1'></div>
+                </div>
             </div>
         </div>
     </div>
