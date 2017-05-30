@@ -16,6 +16,7 @@ security:
             form_login:
                 check_path: /login_check
                 login_path: /login
+                success_handler: redirect.after.login
                 always_use_default_target_path: false
                 default_target_path:            /donneesbudget/
                 target_path_parameter:          _target_path

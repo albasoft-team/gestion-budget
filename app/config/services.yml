@@ -16,3 +16,7 @@ services:
             public: false
             tags:
                 - { name: serializer.normalizer }
+
+    redirect.after.login:
+            class: UserBundle\Redirection\AfterLoginRedirection
+            arguments: ['@router','@security.authorization_checker']
