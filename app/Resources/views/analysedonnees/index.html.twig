@@ -14,7 +14,7 @@
                         <select type="text" ng-model="formData.composant" class="form-control" id="numcompte" required>
                             <option></option>
                             {% for compte in comptes %}
-                                <option value="{{ compte.numeroCompte }}">{{ compte.numeroCompte }}</option>
+                                <option value="{{ compte.numeroCompte }}">{{ compte.numeroCompte }} : {{ compte.libelle }}</option>
                             {% endfor %}
                         </select>
                     </div>
