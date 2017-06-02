@@ -11,6 +11,16 @@
             width: auto !important;
             margin-right: 25px;
         }
+        .bootstrap-select.btn-group .dropdown-menu li {
+            position: relative;
+            font-size: 16px;
+            color: #3277b2;
+        }
+        .bootstrap-select.btn-group .dropdown-menu li a.opt {
+            position: relative;
+            padding-left: 2.25em;
+            font-size: smaller;
+        }
     </style>
     {% endblock %}
 {% block body %}
@@ -42,7 +52,7 @@
                         <select type="text" ng-model="formData.axe" class="selectpicker" id="axe" required>
                             <option></option>
                             {% for axe in axes  %}
-                                <option value="{{ axe.code }}">{{ axe.designation }}</option>
+                                <option class="option" value="{{ axe.code }}">{{ axe.designation }}</option>
                             {% endfor %}
                         </select>
                     </div>
