@@ -59,7 +59,7 @@
 
 
 #formAnalyse .form-group {
-    margin: 15px;
+    /*width: 200px !important;*/
 }
 .panelChart {
     margin: 10px;

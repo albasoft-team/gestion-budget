@@ -1,5 +1,18 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <style>
+        .bootstrap-select>.dropdown-toggle {
+            padding-right: 25px;
+            z-index: 1;
+            border: 1px solid #CCC;
+            color: black;
+        }
+        .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+            width: auto !important;
+            margin-right: 25px;
+        }
+    </style>
+    {% endblock %}
 {% block body %}
     <div ng-controller="analyseDonnees" class="container">
         <div id="panelMap" style="padding-left: 0px; padding-right: 0px;" class="panel panel-primary col-lg-12 col-md-12 col-xs-12 col-sm-12">
@@ -8,19 +21,25 @@
                 <div ng-if="msg.length > 0" style="margin: 20px;">
                     <span class="alert alert-danger" ng-repeat="mes in msg">[[mes]]</span>
                 </div>
-                <form id="formAnalyse" class="form-inline" name="myForm">
+                <form id="formAnalyse" class="form-inline" name="myForm" style="margin-bottom: 15px">
                     <div class="form-group">
                         <label for="numcompte">Composant à analyser:</label>
-                        <select type="text" ng-model="formData.composant" class="form-control" id="numcompte" required>
+                        <select type="text" ng-model="formData.composant" class="selectpicker" id="numcompte" required>
                             <option></option>
-                            {% for compte in comptes %}
-                                <option value="{{ compte.numeroCompte }}">{{ compte.numeroCompte }} : {{ compte.libelle }}</option>
+                            {% for chap in chapitres %}
+                                {% if chap.comptes.count > 0 %}
+                                    <optgroup label="{{ chap.designation }}">
+                                        {% for compte in chap.comptes %}
+                                            <option value="{{ compte.numeroCompte }}">{{ compte.numeroCompte }} : {{ compte.libelle }}</option>
+                                        {% endfor %}
+                                    </optgroup>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="axe">Choisir un axe :</label>
-                        <select type="text" ng-model="formData.axe" class="form-control" id="axe" required>
+                        <select type="text" ng-model="formData.axe" class="selectpicker" id="axe" required>
                             <option></option>
                             {% for axe in axes  %}
                                 <option value="{{ axe.code }}">{{ axe.designation }}</option>
@@ -29,7 +48,7 @@
                     </div>
                     <div class="form-group">
                         <label for="axe">Choisir une portée :</label>
-                        <select type="text" ng-model="formData.portee" class="form-control" id="axe" required>
+                        <select type="text" ng-model="formData.portee" class="selectpicker" id="axe" required>
                             <option></option>
                             <option value="departement">Département</option>
                             <option value="commune">Commune</option>
@@ -61,5 +80,11 @@
 
 
 {% endblock %}
+
 {% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('.select').selectpicker();
+        });
+    </script>
 {% endblock %}

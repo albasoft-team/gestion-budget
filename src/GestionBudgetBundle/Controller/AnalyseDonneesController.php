@@ -37,10 +37,11 @@ class AnalyseDonneesController extends Controller
         $em = $this->getDoctrine()->getManager();
         $comptes = $em->getRepository("GestionBudgetBundle:Compte")->findAll();
         $axes = $em->getRepository("GestionBudgetBundle:Axe")->findAll();
-
+        $chapitres = $em->getRepository('GestionBudgetBundle:Chapitre')->findAll();
         return $this->render("analysedonnees/index.html.twig", array(
            'comptes' => $comptes,
-            'axes' => $axes
+            'axes' => $axes,
+            'chapitres' => $chapitres
         ));
     }
 
