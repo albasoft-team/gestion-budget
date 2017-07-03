@@ -186,7 +186,7 @@ class DonneesBudget
      */
     public function getDateSaisie()
     {
-        return $this->dateSaisie;
+        return $this->dateSaisie->format("d/m/Y");
     }
 
 

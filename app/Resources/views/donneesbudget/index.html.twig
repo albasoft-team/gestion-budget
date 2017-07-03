@@ -108,7 +108,7 @@
                                     {#</span>#}
 
                                     </td>
-                                    <td>[[ donneesBudget.dateSaisie.timestamp | date : 'dd/MM/yyyy' ]]</td>
+                                    <td>[[ donneesBudget.dateSaisie ]]</td>
                                     <td ng-if="(donneesBudget.budgetrecouvre !== null || donneesBudget.budgetVote !== null)">[[(donneesBudget.budgetrecouvre / donneesBudget.budgetVote) * 100 | number : 2]] %</td>
                                     <td ng-if="donneesBudget.budgetrecouvre == null || donneesBudget.budgetVote == null">%</td>
                                     {#<td>[[donneesBudget.departement.nomDepartement]]</td>#}
