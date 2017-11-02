@@ -76,13 +76,14 @@ gestionBudget.controller('donneesBudget',['$scope','donneesBudgetService', 'NgTa
         }
     };
     $scope.setMarkeur = function (data, id,budget) {
+        console.log('ici');
        if (!data.match(/[\d\s]+/g)) {
-           angular.element(document.getElementById("gb"+id+budget)).find("input").css('border','2px solid #a94442');
-           angular.element(document.getElementById("validForm"+id)).attr("disabled","disabled");
+           angular.element(document.getElementById("elem"+id+budget)).find("input").css('border','2px solid #a94442');
+           // angular.element(document.getElementById("validForm"+id)).attr("disabled","disabled");
        }
        else {
-           angular.element(document.getElementById("gb"+id+budget)).find("input").css('border','2px solid #b2dba1');
-           angular.element(document.getElementById("validForm"+id)).removeAttr("disabled","disabled");
+           angular.element(document.getElementById("elem"+id+budget)).find("input").css('border','2px solid #b2dba1');
+           // angular.element(document.getElementById("validForm"+id)).removeAttr("disabled","disabled");
        }
     };
 

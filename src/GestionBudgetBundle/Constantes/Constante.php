@@ -62,7 +62,7 @@ class Constante
         )
     );
     const CHARTCARTE = array(
-        "caption" => "La gestion des budgets du Sénagal",
+        "caption" => "La gestion des budgets du Sénégal",
         "theme" => "fint",
         "formatNumberScale" => "0",
         "showLabels" => "1",
